@@ -16,14 +16,14 @@ export const typography = {
     "4xl": 36,
   },
   lineHeight: {
-    xs: 1.3,
-    sm: 1.35,
+    xs: 1.5,
+    sm: 1.5,
     md: 1.5,
-    lg: 1.55,
-    xl: 1.6,
-    "2xl": 1.65,
-    "3xl": 1.7,
-    "4xl": 1.75,
+    lg: 1.4,
+    xl: 1.35,
+    "2xl": 1.3,
+    "3xl": 1.2,
+    "4xl": 1.15,
   },
 }
 
