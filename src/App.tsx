@@ -1,7 +1,9 @@
+import { Text } from "./components/atoms"
+
 const App = () => {
   return (
     <div>
-      <h1>Hello, World!</h1>
+      <Text>Hello World!</Text>
     </div>
   )
 }
