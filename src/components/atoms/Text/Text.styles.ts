@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components"
 
-import { typography } from "../../../foundation"
+import { typography } from "@/foundation"
 
 export type TextSize = keyof typeof typography.fontSize
 export type TextWeight = keyof typeof typography.fontWeight

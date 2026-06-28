@@ -82,6 +82,8 @@ export type TokenNameType = typeof tokenName
 - `verbatimModuleSyntax: true` (`tsconfig.app.json`) — type-only imports/exports must use `import type` / `export type` explicitly; mixed imports will fail to compile.
 - `erasableSyntaxOnly: true` — avoid TS syntax that requires runtime transformation (e.g. enums, parameter properties, namespaces).
 - `noUnusedLocals` / `noUnusedParameters` are enabled — unused bindings fail the build, not just lint.
+- **`@/*` path alias maps to `src/*`** — configured in both `tsconfig.app.json` (`paths`, no `baseUrl`; it's deprecated as of this TS version) and `vite.config.ts` (`resolve.alias`, via `path.resolve(import.meta.dirname, "src")`). Both must stay in sync — TS only type-checks the alias, Vite is what actually resolves it at build/dev/test time.
+- Use `@/...` for cross-cutting imports (e.g. `@/foundation`, `@/styles/GlobalStyle`) to avoid `../../../`-style chains as components nest deeper under Atomic Design layers. Keep plain relative imports (`./Text.styles`) for files co-located in the same component folder — the alias is for crossing into a different top-level concern, not for siblings.
 
 ### ESLint/Prettier conventions
 

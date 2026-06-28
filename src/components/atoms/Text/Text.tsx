@@ -1,6 +1,7 @@
 import type { ElementType, ReactNode } from "react"
 
-import { colors } from "../../../foundation"
+import { colors } from "@/foundation"
+
 import type { TextAlign, TextSize, TextWeight } from "./Text.styles"
 import { StyledText } from "./Text.styles"
 
@@ -28,7 +29,7 @@ export type TextProps = {
   weight?: TextWeight
 }
 
-const Text = (props: TextProps) => {
+export const Text = (props: TextProps) => {
   const { align, as, children, className, color = "default", size = "md", weight = "regular" } = props
 
   return (
@@ -37,5 +38,3 @@ const Text = (props: TextProps) => {
     </StyledText>
   )
 }
-
-export default Text
