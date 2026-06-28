@@ -44,6 +44,16 @@ export default defineConfig([
     },
   },
   {
+    // Node scripts (git hooks, etc.) run outside the browser, so they need Node globals
+    // (process, __dirname, ...) instead of the browser globals used by the rest of the app.
+    files: ["scripts/**/*.{js,mjs,cjs}"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+  {
     // src/foundation/ token scales are intentionally ordered by size (xs -> 4xl, 50 -> 900),
     // not alphabetically, so only enforce alphabetical prop/destructuring order for components.
     files: ["src/components/**/*.{ts,tsx}"],

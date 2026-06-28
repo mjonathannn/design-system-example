@@ -105,3 +105,10 @@ export type TokenNameType = typeof tokenName
 - Commit messages follow **Conventional Commits**: prefix the subject with `feat:`, `fix:`, `docs:`, or `refactor:` depending on the change (e.g. `feat: add Text atom`, `fix: correct zIndex layer gaps`).
 - Keep the **first line under 72 characters**. Put any additional detail in the commit body after a blank line, not by letting the subject run long.
 - **Always run `yarn test` before committing** — never commit with a failing test suite.
+
+### These rules are enforced by Husky, not just documented
+
+- `core.hooksPath` is set to `.husky/_` (via `husky init`); the `prepare` script (`"prepare": "husky"`) re-links this on every `yarn install`, so hooks work for anyone who clones the repo — don't delete the `prepare` script.
+- `.husky/pre-commit` runs `yarn test` — a commit is blocked if the suite fails.
+- `.husky/commit-msg` runs `scripts/validate-commit-msg.mjs`, which rejects the commit if the subject line doesn't start with `feat:`/`fix:`/`docs:`/`refactor:` (optionally `type(scope):`) or exceeds 72 characters. This is a small standalone Node script, not commitlint — if a new commit type needs to be allowed, edit the `allowedTypes` array there.
+- Hook files in `.husky/` must keep the executable bit (`100755`) in git, not `100644` — Windows filesystems don't track this natively, so after creating/editing a hook file, fix it explicitly with `git update-index --chmod=+x .husky/<hook-name>` if `git ls-files --stage .husky/<hook-name>` shows `100644`.
