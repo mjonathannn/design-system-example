@@ -1,7 +1,8 @@
-import type { ElementType, ReactNode } from "react"
+import type { ComponentPropsWithoutRef, CSSProperties, ElementType, ReactNode } from "react"
 
 import { colors } from "@/foundation"
 
+import { useTooltip } from "../Tooltip"
 import type { TextAlign, TextSize, TextWeight } from "./Text.styles"
 import { StyledText } from "./Text.styles"
 
@@ -19,22 +20,53 @@ const colorMap: Record<TextColor, string> = {
   warning: colors.warning[500],
 }
 
-export type TextProps = {
+type TextOwnProps<C extends ElementType> = {
   children: ReactNode
   align?: TextAlign
-  as?: ElementType
+  as?: C
   className?: string
   color?: TextColor
   size?: TextSize
+  style?: CSSProperties
+  tooltip?: string
   weight?: TextWeight
 }
 
-export const Text = (props: TextProps) => {
-  const { align, as, children, className, color = "default", size = "md", weight = "regular" } = props
+export type TextProps<C extends ElementType = "p"> = TextOwnProps<C> &
+  Omit<ComponentPropsWithoutRef<C>, keyof TextOwnProps<C>>
+
+export const Text = <C extends ElementType = "p">(props: TextProps<C>) => {
+  const {
+    align,
+    as,
+    children,
+    className,
+    color = "default",
+    size = "md",
+    style,
+    tooltip,
+    weight = "regular",
+    ...rest
+  } = props
+
+  const { tooltipElement, tooltipHandlers } = useTooltip(tooltip)
 
   return (
-    <StyledText as={as} className={className} $size={size} $weight={weight} $color={colorMap[color]} $align={align}>
-      {children}
-    </StyledText>
+    <>
+      <StyledText
+        $align={align}
+        $color={colorMap[color]}
+        $size={size}
+        $weight={weight}
+        as={as}
+        className={className}
+        style={style}
+        {...rest}
+        {...tooltipHandlers}
+      >
+        {children}
+      </StyledText>
+      {tooltipElement}
+    </>
   )
 }

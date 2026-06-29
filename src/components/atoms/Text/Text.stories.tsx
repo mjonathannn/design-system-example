@@ -43,17 +43,41 @@ export const Heading: Story = {
   },
 }
 
+export const WithInlineStyle: Story = {
+  args: {
+    children: "Text with a one-off inline style override",
+    style: { textDecoration: "underline", textTransform: "uppercase" },
+  },
+}
+
+export const AsLink: Story = {
+  args: {
+    as: "a",
+    children: "Text rendered as a link",
+    color: "brand",
+    href: "https://example.com",
+    target: "_blank",
+  },
+}
+
+export const WithTooltip: Story = {
+  args: {
+    children: "Hover me to see the tooltip",
+    tooltip: "Helpful hint that follows your cursor",
+  },
+}
+
 export const Colors: Story = {
   render: () => (
     <>
       <Text color="default">default</Text>
-      <Text color="secondary">secondary</Text>
-      <Text color="muted">muted</Text>
       <Text color="brand">brand</Text>
-      <Text color="success">success</Text>
-      <Text color="warning">warning</Text>
       <Text color="danger">danger</Text>
       <Text color="info">info</Text>
+      <Text color="muted">muted</Text>
+      <Text color="secondary">secondary</Text>
+      <Text color="success">success</Text>
+      <Text color="warning">warning</Text>
     </>
   ),
 }
