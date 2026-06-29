@@ -25,26 +25,38 @@ This is a React 19 + TypeScript + Vite app. `src/App.tsx` was reset to a minimal
 
 ### `src/foundation/` is the single source of design tokens
 
-`src/foundation/` defines a code-based token system (colors, spacing, typography, motion, radius, shadows, opacity, zIndex, breakpoints), exported through `src/foundation/index.ts`. It is the only design-token system in the project — new UI should consume values from `src/foundation` inside `styled-components` definitions (e.g. `colors.primary[500]`, `spacing[4]`) rather than hardcoding colors/spacing/etc. Note it currently has no dark-mode variants.
+`src/foundation/` defines a code-based token system (colors, spacing, typography, motion, radius, shadows, opacity, zIndex, breakpoints), exported through `src/foundation/index.ts`. It is the only design-token system in the project — new UI should consume values from `src/foundation` inside `styled-components` definitions (e.g. `colors.primary[500]`, `spacing[16]`) rather than hardcoding colors/spacing/etc. Note it currently has no dark-mode variants.
+
+`spacing` and `colors.primary`/`colors.neutral` are numeric-keyed scales, but they don't mean the same thing: `spacing` keys are the pixel value itself (`spacing[16]` is `"16px"`, `spacing[24]` is `"24px"`, ...), while the color scales use abstract step numbers (`colors.primary[500]` is the base brand blue, not "500px" of anything). Don't assume one numeric-key convention applies to both.
 
 ### Components follow Atomic Design
 
 UI components live under `src/components/<layer>/<ComponentName>/`, where `<layer>` is one of `atoms`, `molecules`, `organisms`, `templates`, `pages`. Each component gets its own PascalCase folder containing:
 
-- `ComponentName.tsx` — the component (default export) plus its `export type ComponentNameProps`.
+- `ComponentName.tsx` — the component as a named export (e.g. `export const Text = ...`) plus its `export type ComponentNameProps`.
 - `ComponentName.styles.ts` — the `styled-components` definitions, imported into `ComponentName.tsx`. Keep styling declarations out of the component file itself.
-- `index.ts` — barrel re-exporting the default and the props type, e.g. `export { default } from "./ComponentName"` / `export type { ComponentNameProps } from "./ComponentName"`.
+- `index.ts` — barrel re-exporting everything from the component file, e.g. `export * from "./ComponentName"`.
 
-Each layer folder (`atoms/`, `molecules/`, ...) also has its own `index.ts` barrel re-exporting every component in that layer by name, e.g. `export { default as Text } from "./Text"` / `export type { TextProps } from "./Text"` (see `src/components/atoms/index.ts`) — add new components to that barrel too.
+Each layer folder (`atoms/`, `molecules/`, ...) also has its own `index.ts` barrel re-exporting every component in that layer, e.g. `export * from "./Text"` (see `src/components/atoms/index.ts`) — add new components to that barrel too.
 
 `src/components/atoms/Text/` is the reference implementation: it derives its `size`/`weight` variants directly from `typography.fontSize`/`fontWeight`/`lineHeight` and its `color` variants from a semantic map (`default`/`secondary`/`muted`/`inverse`/`brand`/`success`/`warning`/`danger`/`info`) backed by `colors` — follow this pattern (semantic prop values mapped to `src/foundation` tokens, not raw hex/px values) for new atoms/molecules/organisms.
+
+Every component also accepts a `style?: CSSProperties` prop (imported as `import type { CSSProperties } from "react"`), passed straight through to the root styled element (e.g. `<StyledText style={style}>`) as a one-off inline-style escape hatch on top of the variant props — see `Text.tsx`/`Text.styles.ts`.
+
+### `Tooltip` and the `tooltip` prop convention
+
+`src/components/atoms/Tooltip/` provides the cursor-following tooltip balloon plus the `useTooltip` hook that any component uses to opt into a `tooltip?: string` prop:
+
+- `Tooltip.tsx` is the presentational balloon — it takes `x`/`y` (viewport coordinates) and `children`, and renders via `createPortal(..., document.body)` so it isn't clipped by `overflow: hidden` ancestors and always sits above other content (`zIndex.tooltip`). It has no visibility/hover logic of its own — it always renders when mounted.
+- `useTooltip(tooltip?: string)` (in `useTooltip.tsx`, co-located with `Tooltip` since it's tightly coupled — note the `.tsx` extension, required because the hook returns JSX) owns the hover/mouse-tracking state and returns `{ tooltipElement, tooltipHandlers }`. `tooltipHandlers` (`onMouseEnter`/`onMouseMove`/`onMouseLeave`) gets spread onto the component's root styled element to track the cursor and toggle visibility; `tooltipElement` is the already-built `<Tooltip>` (or `null` when not hovering / no `tooltip` text given) to render as a sibling.
+- To add this to a new component: add `tooltip?: string` to its own props (alphabetical position among the optional props), call `const { tooltipElement, tooltipHandlers } = useTooltip(tooltip)`, spread `{...tooltipHandlers}` onto the root styled element (after `{...rest}`, so it always wins over any same-named prop a caller passed through), wrap the return in a fragment, and render `{tooltipElement}` as a sibling after the root element — see `Text.tsx` for the reference wiring.
 
 ### Styling with `styled-components`
 
 - Plain `.css` files are no longer used anywhere in `src/` — write all styles with `styled-components`.
 - Component-specific styled components live in `ComponentName.styles.ts`, not inline in the `.tsx` file.
 - Props passed to a styled component that exist purely to drive CSS (not valid DOM attributes) must use the `$` transient-prop prefix (e.g. `$size`, `$color`) so `styled-components` doesn't forward them to the DOM node — see `Text.styles.ts`.
-- Polymorphic tag rendering (e.g. `Text`'s `as` prop) should rely on `styled-components`' native `as` prop support on the styled component itself, rather than swapping the rendered element manually.
+- Polymorphic tag rendering (e.g. `Text`'s `as` prop) should rely on `styled-components`' native `as` prop support on the styled component itself, rather than swapping the rendered element manually. To get the rendered tag's own attributes typed and forwarded (e.g. `href` when `as="a"`), make the component's props generic over `C extends ElementType` — own props live in a `TextOwnProps<C>` type, and the exported `TextProps<C extends ElementType = "p">` intersects it with `Omit<ComponentPropsWithoutRef<C>, keyof TextOwnProps<C>>`. The component itself becomes `<C extends ElementType = "p">(props: TextProps<C>) => {...}`, destructuring known props plus `...rest` and spreading `rest` onto the styled element. See `Text.tsx`. (A bare generic like `<T>(props) => ...` is ambiguous with JSX in a `.tsx` file and needs a trailing comma — `<T,>` — or an `extends` clause to disambiguate; since this generic already has `extends ElementType`, no trailing comma is needed here.)
 - Global/reset styles go in `src/styles/GlobalStyle.ts` via `createGlobalStyle`, rendered once in `main.tsx`.
 
 ### Every component is documented with Storybook
@@ -63,6 +75,7 @@ Each component folder also gets a co-located `ComponentName.stories.tsx` (CSF3 f
 - `src/test/setup.ts` imports `@testing-library/jest-dom/vitest` (the Vitest-specific entry point, not the generic `@testing-library/jest-dom` one) to register matchers like `toHaveClass`/`toBeInTheDocument` on Vitest's `expect`.
 - Import `describe`/`it`/`expect` explicitly from `"vitest"` in every test file — `globals` is not enabled in the Vitest config, matching this project's preference for explicit imports over ambient globals.
 - `@testing-library/dom` is a required peer dependency of `@testing-library/react` and must stay installed even though nothing imports it directly.
+- `src/test/setup.ts` also calls `afterEach(() => cleanup())` explicitly. React Testing Library's auto-cleanup only registers itself when it detects a global `afterEach` (e.g. Jest, or Vitest with `globals: true`); since this project's Vitest config keeps `globals` off, auto-cleanup never fires without this — and without it, every `render()` in a file keeps piling up in `document.body` across `it` blocks (most visible with portal-based components like `Tooltip`, or repeated text across tests).
 
 ### `src/foundation/` conventions
 
@@ -76,6 +89,7 @@ export type TokenNameType = typeof tokenName
 - Named exports only — **no `export default`**. The barrel (`src/foundation/index.ts`) re-exports everything via `export *`, which does not forward default exports, so a default would be dead code.
 - The barrel exports are alphabetically ordered by filename; keep new modules in that order.
 - Object literals are not `as const` — values widen to `string`/`number` in the derived `*Type` types rather than keeping literal types.
+- `breakpoints.ts` is the one exception to "one object + one type per module": it exports both `breakpoints` (raw pixel values) and `media` (the same values pre-wrapped in `(min-width: ...)` strings), each with its own `BreakpointsType`/`MediaType`.
 
 ### TypeScript config notes
 
@@ -113,4 +127,5 @@ export type TokenNameType = typeof tokenName
 - `core.hooksPath` is set to `.husky/_` (via `husky init`); the `prepare` script (`"prepare": "husky"`) re-links this on every `yarn install`, so hooks work for anyone who clones the repo — don't delete the `prepare` script.
 - `.husky/pre-commit` runs `yarn test` — a commit is blocked if the suite fails.
 - `.husky/commit-msg` runs `scripts/validate-commit-msg.mjs`, which rejects the commit if the subject line doesn't start with `feat:`/`fix:`/`docs:`/`refactor:` (optionally `type(scope):`) or exceeds 72 characters. This is a small standalone Node script, not commitlint — if a new commit type needs to be allowed, edit the `allowedTypes` array there.
+- Scripts under `scripts/` run in Node, not the browser, so they get a dedicated `eslint.config.js` block with `globals.node` (for `process`, etc.) instead of the `globals.browser` used everywhere else — add new Node-only scripts under that same folder so they pick up the right globals automatically.
 - Hook files in `.husky/` must keep the executable bit (`100755`) in git, not `100644` — Windows filesystems don't track this natively, so after creating/editing a hook file, fix it explicitly with `git update-index --chmod=+x .husky/<hook-name>` if `git ls-files --stage .husky/<hook-name>` shows `100644`.
