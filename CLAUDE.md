@@ -58,6 +58,11 @@ Every component also accepts a `style?: CSSProperties` prop (imported as `import
 - Props passed to a styled component that exist purely to drive CSS (not valid DOM attributes) must use the `$` transient-prop prefix (e.g. `$size`, `$color`) so `styled-components` doesn't forward them to the DOM node — see `Text.styles.ts`.
 - Polymorphic tag rendering (e.g. `Text`'s `as` prop) should rely on `styled-components`' native `as` prop support on the styled component itself, rather than swapping the rendered element manually. To get the rendered tag's own attributes typed and forwarded (e.g. `href` when `as="a"`), make the component's props generic over `C extends ElementType` — own props live in a `TextOwnProps<C>` type, and the exported `TextProps<C extends ElementType = "p">` intersects it with `Omit<ComponentPropsWithoutRef<C>, keyof TextOwnProps<C>>`. The component itself becomes `<C extends ElementType = "p">(props: TextProps<C>) => {...}`, destructuring known props plus `...rest` and spreading `rest` onto the styled element. See `Text.tsx`. (A bare generic like `<T>(props) => ...` is ambiguous with JSX in a `.tsx` file and needs a trailing comma — `<T,>` — or an `extends` clause to disambiguate; since this generic already has `extends ElementType`, no trailing comma is needed here.)
 - Global/reset styles go in `src/styles/GlobalStyle.ts` via `createGlobalStyle`, rendered once in `main.tsx`.
+- **Token values in styles must use `src/foundation` tokens, never hardcoded literals.** Any CSS property whose value has a corresponding foundation token must reference that token — never write the raw value directly in a `.styles.ts` file or a `style={{...}}` object:
+  - Pixel measurements → `spacing` (e.g. `padding: ${spacing[24]}`, `gap: ${spacing[8]}`)
+  - Opacity → `opacity` (e.g. `opacity: ${opacity.disabled}` instead of `opacity: 0.5`)
+  - Other token types follow the same rule: `radius`, `shadows`, `colors`, `zIndex`, `typography`, `motion`, `translucency`
+  - Exceptions: values with no corresponding token (`1px` borders, percentage/viewport units, dynamic computed values) and values already derived from another token (e.g. `${typography.fontSize.sm}px`).
 
 ### Every component is documented with Storybook
 

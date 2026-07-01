@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
+import { spacing } from "@/foundation"
+
 import { Text } from "./Text"
 
 describe("Text", () => {
@@ -29,11 +31,11 @@ describe("Text", () => {
   })
 
   it("applies inline styles passed via the style prop", () => {
-    render(<Text style={{ marginTop: "8px" }}>Inline</Text>)
+    render(<Text style={{ marginTop: spacing[8] }}>Inline</Text>)
 
     const element = screen.getByText("Inline")
 
-    expect(element).toHaveStyle({ marginTop: "8px" })
+    expect(element).toHaveStyle({ marginTop: spacing[8] })
   })
 
   it("forwards attributes specific to the tag passed via the as prop", () => {

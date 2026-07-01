@@ -18,7 +18,7 @@ export const TooltipBalloon = styled.div<TooltipBalloonProps>`
       top: ${$y + cursorOffset}px;
       left: ${$x + cursorOffset}px;
       z-index: ${zIndex.tooltip};
-      max-width: 240px;
+      max-width: ${spacing[240]};
       padding: ${spacing[8]} ${spacing[12]};
       border-radius: ${radius.sm};
       background: ${colors.neutral[900]};
