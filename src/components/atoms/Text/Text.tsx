@@ -24,8 +24,10 @@ type TextOwnProps<C extends ElementType> = {
   children: ReactNode
   align?: TextAlign
   as?: C
+  bold?: boolean
   className?: string
   color?: TextColor
+  semibold?: boolean
   size?: TextSize
   style?: CSSProperties
   tooltip?: string
@@ -39,9 +41,11 @@ export const Text = <C extends ElementType = "p">(props: TextProps<C>) => {
   const {
     align,
     as,
+    bold,
     children,
     className,
     color = "default",
+    semibold,
     size = "md",
     style,
     tooltip,
@@ -51,13 +55,17 @@ export const Text = <C extends ElementType = "p">(props: TextProps<C>) => {
 
   const { tooltipElement, tooltipHandlers } = useTooltip(tooltip)
 
+  let resolvedWeight: TextWeight = weight
+  if (bold) resolvedWeight = "bold"
+  else if (semibold) resolvedWeight = "semibold"
+
   return (
     <>
       <StyledText
         $align={align}
         $color={colorMap[color]}
         $size={size}
-        $weight={weight}
+        $weight={resolvedWeight}
         as={as}
         className={className}
         style={style}

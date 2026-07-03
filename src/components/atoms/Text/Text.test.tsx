@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
-import { spacing } from "@/foundation"
+import { spacing, typography } from "@/foundation"
 
 import { Text } from "./Text"
 
@@ -51,6 +51,28 @@ describe("Text", () => {
 
     expect(element.tagName).toBe("A")
     expect(element).toHaveAttribute("href", url)
+  })
+
+  it("applies bold font weight when the bold prop is set", () => {
+    render(<Text bold>Bold</Text>)
+
+    expect(screen.getByText("Bold")).toHaveStyle({ fontWeight: typography.fontWeight.bold })
+  })
+
+  it("applies semibold font weight when the semibold prop is set", () => {
+    render(<Text semibold>Semibold</Text>)
+
+    expect(screen.getByText("Semibold")).toHaveStyle({ fontWeight: typography.fontWeight.semibold })
+  })
+
+  it("bold takes precedence over semibold when both are set", () => {
+    render(
+      <Text bold semibold>
+        Both
+      </Text>,
+    )
+
+    expect(screen.getByText("Both")).toHaveStyle({ fontWeight: typography.fontWeight.bold })
   })
 
   it("shows the tooltip on hover and hides it on mouse leave", () => {

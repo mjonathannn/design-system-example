@@ -11,9 +11,17 @@ const meta: Meta<typeof Text> = {
       control: "select",
       options: ["left", "center", "right", "justify"],
     },
+    bold: {
+      control: "boolean",
+      description: "Shorthand for weight=\"bold\". Takes precedence over semibold and weight.",
+    },
     color: {
       control: "select",
       options: ["default", "secondary", "muted", "inverse", "brand", "success", "warning", "danger", "info"],
+    },
+    semibold: {
+      control: "boolean",
+      description: "Shorthand for weight=\"semibold\". Takes precedence over weight; overridden by bold.",
     },
     size: {
       control: "select",
@@ -21,6 +29,7 @@ const meta: Meta<typeof Text> = {
     },
     weight: {
       control: "select",
+      description: "Explicit font weight. Ignored when bold or semibold is set.",
       options: ["regular", "medium", "semibold", "bold"],
     },
   },
@@ -40,6 +49,20 @@ export const Heading: Story = {
     as: "h1",
     size: "3xl",
     weight: "bold",
+  },
+}
+
+export const Bold: Story = {
+  args: {
+    bold: true,
+    children: "Bold text via the bold prop",
+  },
+}
+
+export const Semibold: Story = {
+  args: {
+    children: "Semibold text via the semibold prop",
+    semibold: true,
   },
 }
 
