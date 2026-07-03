@@ -30,11 +30,9 @@ export const Card = (props: CardProps) => {
   const background = translucentConfig?.background ?? colors.neutral[0]
   const backdropFilter = translucentConfig?.backdropFilter
   const boxShadow = elevated ? shadows.lg : undefined
-  const border = elevated
-    ? "none"
-    : translucentConfig
-      ? "1px solid rgba(255, 255, 255, 0.3)"
-      : `1px solid ${colors.neutral[100]}`
+  let border = `1px solid ${colors.neutral[100]}`
+  if (elevated) border = "none"
+  else if (translucentConfig) border = "1px solid rgba(255, 255, 255, 0.3)"
 
   return (
     <>

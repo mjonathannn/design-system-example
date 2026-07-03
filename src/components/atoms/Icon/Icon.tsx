@@ -34,6 +34,7 @@ export const Icon = (props: IconProps) => {
   const { className, color = "default", name, size = 20, style, tooltip } = props
 
   const { tooltipElement, tooltipHandlers } = useTooltip(tooltip)
+
   const IconComponent = iconMap[name]
 
   return (
