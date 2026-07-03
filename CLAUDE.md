@@ -64,6 +64,15 @@ Every component also accepts a `style?: CSSProperties` prop (imported as `import
   - Other token types follow the same rule: `radius`, `shadows`, `colors`, `zIndex`, `typography`, `motion`, `translucency`
   - Exceptions: values with no corresponding token (`1px` borders, percentage/viewport units, dynamic computed values) and values already derived from another token (e.g. `${typography.fontSize.sm}px`).
 
+### Adding or changing props
+
+Whenever a new prop is added to a component (or an existing prop is changed or removed), two files **must** be updated in the same change:
+
+1. **`ComponentName.stories.tsx`** — add or update the `argTypes` entry for the prop (with `control` type and `description`) and add a dedicated story that exercises the new behavior if it isn't already covered.
+2. **`ComponentName.test.tsx`** — add or update test cases that cover the new prop's behavior.
+
+These are not optional follow-ups: documentation and tests are part of the same unit of work as the prop itself.
+
 ### Every component is documented with Storybook
 
 Each component folder also gets a co-located `ComponentName.stories.tsx` (CSF3 format), alongside `ComponentName.tsx`/`.styles.ts`/`index.ts` — see `Text.stories.tsx`. Conventions:
@@ -109,10 +118,38 @@ export type TokenNameType = typeof tokenName
 - Import order is enforced by `eslint-plugin-simple-import-sort` (`simple-import-sort/imports` and `/exports` are `error`, not warnings) — let `lint:fix` or an editor integration sort imports rather than hand-ordering them.
 - Prettier config (`.prettierrc`): no semicolons, double quotes, trailing commas everywhere, 120 print width, LF line endings.
 - **Arrow functions are preferred everywhere** — enforced via `func-style: ["error", "expression", { allowArrowFunctions: true }]` (bans `function foo() {}` declarations) and `prefer-arrow-callback: "error"` (bans `function` expressions passed as callbacks, e.g. `arr.map(function (x) {...})`). Always write `const foo = () => {...}`, including for components (see `App.tsx`) and hooks.
+- **Never use nested ternaries.** When more than one condition must be resolved, use `if/else` chains or early returns instead. A single ternary (`a ? b : c`) is fine; nesting another inside the branches is not.
 - **Never destructure function parameters inline.** Take the full `props` (or other single argument) and destructure it on the first line of the body instead: `const { a, b } = props`, not `({ a, b }: Props) => {}`. This applies to components and plain functions alike, including `styled-components` interpolation callbacks (see `Text.styles.ts`, where the whole props object is destructured once inside the interpolation function body rather than in its parameter list). Not currently lint-enforced — no ESLint rule covers this, so review for it manually.
 - **Alphabetical property order, required before optional**, enforced by `eslint-plugin-perfectionist` but scoped to `files: ["src/components/**/*.{ts,tsx}"]` only (see `eslint.config.js`) — deliberately **not** applied to `src/foundation/`, whose token scales (`xs`→`4xl`, `50`→`900`) are ordered by size, not alphabetically:
   - `perfectionist/sort-object-types` sorts prop type members (`type FooProps = {...}`) alphabetically within two groups, in this order: `required-property` first, then `optional-property` (each group alphabetical on its own — see `TextProps`/`StyledTextProps`).
   - `perfectionist/sort-objects` sorts object literals and destructured patterns (e.g. `const { a, b } = props`) purely alphabetically — there's no required/optional concept at the destructuring level.
+
+## Component body ordering
+
+Inside a component, constants must follow this sequence (when each type is present), with each block separated by exactly one blank line:
+
+1. **`useRef`** calls
+2. **Custom hooks** (e.g. `useTooltip`, any hook from `src/components` or a shared `hooks/` folder)
+3. **`useState`** calls
+4. **Derived constants** (booleans and other values computed from props/state)
+
+The props destructuring that opens the function body is not counted as a block — the first blank line appears after it, before whichever block comes first. A blank line also follows the last block, before the `return`.
+
+```tsx
+export const Example = (props: ExampleProps) => {
+  const { disabled, label, tooltip } = props
+
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const { tooltipElement, tooltipHandlers } = useTooltip(tooltip)
+
+  const [open, setOpen] = useState(false)
+
+  const isActive = open && !disabled
+
+  return (...)
+}
+```
 
 ## React-specific rules
 
