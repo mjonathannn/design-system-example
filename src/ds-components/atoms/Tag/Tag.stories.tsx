@@ -24,6 +24,10 @@ const meta: Meta<typeof Tag> = {
       control: "text",
       description: "Text shown in a cursor-following tooltip on hover.",
     },
+    variant: {
+      control: "select",
+      options: ["solid", "outlined", "clear"],
+    },
   },
   component: Tag,
   tags: ["autodocs"],
@@ -73,6 +77,76 @@ export const Colors: Story = {
       <Tag color="warning">warning</Tag>
       <Tag color="danger">danger</Tag>
       <Tag color="info">info</Tag>
+    </>
+  ),
+}
+
+// The outlined variant, a transparent background with a colored border and text, for every color
+export const Outlined: Story = {
+  render: () => (
+    <>
+      <Tag color="default" variant="outlined">
+        default
+      </Tag>
+      <Tag color="secondary" variant="outlined">
+        secondary
+      </Tag>
+      <Tag color="muted" variant="outlined">
+        muted
+      </Tag>
+      <Tag color="inverse" variant="outlined">
+        inverse
+      </Tag>
+      <Tag color="brand" variant="outlined">
+        brand
+      </Tag>
+      <Tag color="success" variant="outlined">
+        success
+      </Tag>
+      <Tag color="warning" variant="outlined">
+        warning
+      </Tag>
+      <Tag color="danger" variant="outlined">
+        danger
+      </Tag>
+      <Tag color="info" variant="outlined">
+        info
+      </Tag>
+    </>
+  ),
+}
+
+// The clear variant, a light tint background with a matching-color border and darker text, for every color
+export const Clear: Story = {
+  render: () => (
+    <>
+      <Tag color="default" variant="clear">
+        default
+      </Tag>
+      <Tag color="secondary" variant="clear">
+        secondary
+      </Tag>
+      <Tag color="muted" variant="clear">
+        muted
+      </Tag>
+      <Tag color="inverse" variant="clear">
+        inverse
+      </Tag>
+      <Tag color="brand" variant="clear">
+        brand
+      </Tag>
+      <Tag color="success" variant="clear">
+        success
+      </Tag>
+      <Tag color="warning" variant="clear">
+        warning
+      </Tag>
+      <Tag color="danger" variant="clear">
+        danger
+      </Tag>
+      <Tag color="info" variant="clear">
+        info
+      </Tag>
     </>
   ),
 }

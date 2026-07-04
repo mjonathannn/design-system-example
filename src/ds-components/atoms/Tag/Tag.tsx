@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react"
 
 import { useTooltip } from "../Tooltip"
-import type { TagColor } from "./Tag.styles"
+import type { TagColor, TagVariant } from "./Tag.styles"
 import { StyledTag, tagColorMap } from "./Tag.styles"
 
 export type TagProps = {
@@ -12,14 +12,15 @@ export type TagProps = {
   startIcon?: ReactNode
   style?: CSSProperties
   tooltip?: string
+  variant?: TagVariant
 }
 
 export const Tag = (props: TagProps) => {
-  const { children, className, color = "default", endIcon, startIcon, style, tooltip } = props
+  const { children, className, color = "default", endIcon, startIcon, style, tooltip, variant = "solid" } = props
 
   const { tooltipElement, tooltipHandlers } = useTooltip(tooltip)
 
-  const { background, border, color: textColor } = tagColorMap[color]
+  const { background, border, color: textColor } = tagColorMap[variant][color]
 
   return (
     <>

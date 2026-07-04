@@ -38,6 +38,40 @@ describe("Tag", () => {
     expect(screen.getByText("Novo")).toHaveStyle({ border: `1px solid ${colors.neutral[200]}` })
   })
 
+  it("defaults to the solid variant", () => {
+    render(<Tag color="brand">Novo</Tag>)
+
+    expect(screen.getByText("Novo")).toHaveStyle({ backgroundColor: colors.primary[500] })
+  })
+
+  it("applies a transparent background and colored border/text for the outlined variant", () => {
+    render(
+      <Tag color="brand" variant="outlined">
+        Novo
+      </Tag>,
+    )
+
+    expect(screen.getByText("Novo")).toHaveStyle({
+      backgroundColor: "rgba(0, 0, 0, 0)",
+      border: `1px solid ${colors.primary[500]}`,
+      color: colors.primary[500],
+    })
+  })
+
+  it("applies a light tint background and a darker, matching-border color for the clear variant", () => {
+    render(
+      <Tag color="success" variant="clear">
+        Novo
+      </Tag>,
+    )
+
+    expect(screen.getByText("Novo")).toHaveStyle({
+      backgroundColor: colors.success[50],
+      border: `1px solid ${colors.success[50]}`,
+      color: colors.success[700],
+    })
+  })
+
   it("does not have a click handler or button role", () => {
     render(<Tag>Novo</Tag>)
 
