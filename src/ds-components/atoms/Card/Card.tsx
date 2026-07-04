@@ -16,6 +16,8 @@ export type CardProps = {
   translucent?: TranslucentLevel | boolean
 }
 
+const glassEdgeGlow = "inset 0 1px 1px rgba(255, 255, 255, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.16)"
+
 const resolveTranslucentLevel = (value: TranslucentLevel | true): TranslucentLevel =>
   value === true ? "medium" : value
 
@@ -29,10 +31,9 @@ export const Card = (props: CardProps) => {
     : null
   const background = translucentConfig?.background ?? colors.neutral[0]
   const backdropFilter = translucentConfig?.backdropFilter
-  const boxShadow = elevated ? shadows.lg : undefined
-  let border = `1px solid ${colors.neutral[100]}`
-  if (elevated) border = "none"
-  else if (translucentConfig) border = "1px solid rgba(255, 255, 255, 0.3)"
+  const boxShadowLayers = [elevated && shadows.lg, translucentConfig && glassEdgeGlow].filter(Boolean)
+  const boxShadow = boxShadowLayers.length > 0 ? boxShadowLayers.join(", ") : undefined
+  const border = elevated || translucentConfig ? "none" : `1px solid ${colors.neutral[100]}`
 
   return (
     <>
