@@ -41,6 +41,10 @@ This is a React 19 + TypeScript + Vite app, built from scratch on top of a custo
 
 `src/services/<serviceName>/` follows the same per-module folder shape as `src/utils/` (`<serviceName>.ts` + `index.ts` re-exporting it, e.g. `export * from "./viaCep"`), re-exported in turn through the top-level `src/services/index.ts`. Named exports only, no default export. Requests are made with `axios` (see `viaCep/viaCep.ts`) — there's no shared axios instance/client wrapper yet since there's only the one experimental service; add one if a second service needs shared config (base URL, headers, interceptors) rather than before. **Unlike every other layer in this project, services don't get unit tests** — there's no `<serviceName>.test.ts` to write, mocked or otherwise.
 
+### `src/models/` holds the types for each service
+
+`src/models/<serviceName>/` mirrors the folder of the matching `src/services/<serviceName>/` one-to-one (`<serviceName>.ts` + `index.ts` re-exporting it, e.g. `export * from "./viaCep"`, re-exported in turn through the top-level `src/models/index.ts`). It holds every type tied to that service's endpoints — request parameters, response shapes (see `models/viaCep/viaCep.ts`'s `ViaCepAddress`) — so the service file itself only imports types from `@/models`, it never declares its own. Named exports only, no default export, and — same as `src/services/` — no unit tests, since these are type-only declarations with nothing to execute.
+
 ### `src/foundation/` is the single source of design tokens
 
 `src/foundation/` defines a code-based token system (colors, spacing, typography, motion, radius, shadows, opacity, zIndex, breakpoints), exported through `src/foundation/index.ts`. It is the only design-token system in the project — new UI should consume values from `src/foundation` inside `styled-components` definitions (e.g. `colors.primary[500]`, `spacing[16]`) rather than hardcoding colors/spacing/etc. Note it currently has no dark-mode variants.

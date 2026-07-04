@@ -1,15 +1,7 @@
 import axios from "axios"
 
+import type { ViaCepAddress } from "@/models"
 import { stripNonDigits } from "@/utils/formats"
-
-export type ViaCepAddress = {
-  bairro: string
-  cep: string
-  localidade: string
-  logradouro: string
-  uf: string
-  erro?: boolean
-}
 
 // Experimental call validating the src/services structure with axios against a real public API
 // (ViaCEP - a free Brazilian postal code lookup, no auth required).
