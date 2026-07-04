@@ -1,7 +1,7 @@
 import type { ChangeEvent, ComponentPropsWithoutRef, CSSProperties } from "react"
 import { forwardRef, useId } from "react"
 
-import { Text } from "@/components/atoms"
+import { Text } from "@/ds-components/atoms"
 import { stripNonDigits } from "@/utils/formats"
 
 import type { MaskType } from "./Input.masks"
@@ -10,6 +10,7 @@ import { InputWrapper, StyledInput } from "./Input.styles"
 
 type InputOwnProps = {
   className?: string
+  elevated?: boolean
   helperText?: string
   mask?: MaskType
   numeric?: boolean
@@ -20,7 +21,7 @@ type InputOwnProps = {
 export type InputProps = InputOwnProps & Omit<ComponentPropsWithoutRef<"input">, keyof InputOwnProps>
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { className, helperText, id, mask, numeric, onChange, style, title, ...rest } = props
+  const { className, elevated = true, helperText, id, mask, numeric, onChange, style, title, ...rest } = props
 
   const generatedId = useId()
 
@@ -43,6 +44,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         </Text>
       )}
       <StyledInput
+        $elevated={elevated}
         id={inputId}
         ref={ref}
         {...rest}

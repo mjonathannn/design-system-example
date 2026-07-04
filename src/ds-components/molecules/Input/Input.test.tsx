@@ -3,7 +3,7 @@ import { createRef } from "react"
 import { useForm } from "react-hook-form"
 import { describe, expect, it, vi } from "vitest"
 
-import { spacing } from "@/foundation"
+import { radius, shadows, spacing, typography } from "@/foundation"
 
 import { Input } from "./Input"
 
@@ -74,6 +74,26 @@ describe("Input", () => {
     fireEvent.change(input, { target: { value: "world" } })
 
     expect(handleChange).toHaveBeenCalled()
+  })
+
+  it("uses a large border radius and small font size", () => {
+    render(<Input placeholder="Amount" />)
+
+    const input = screen.getByPlaceholderText("Amount")
+
+    expect(input).toHaveStyle({ borderRadius: radius.lg, fontSize: `${typography.fontSize.sm}px` })
+  })
+
+  it("has a drop shadow by default", () => {
+    render(<Input placeholder="Amount" />)
+
+    expect(screen.getByPlaceholderText("Amount")).toHaveStyle({ boxShadow: shadows.xs })
+  })
+
+  it("removes the drop shadow when elevated is false", () => {
+    render(<Input elevated={false} placeholder="Amount" />)
+
+    expect(screen.getByPlaceholderText("Amount")).toHaveStyle({ boxShadow: shadows.none })
   })
 
   it("respects the disabled attribute", () => {

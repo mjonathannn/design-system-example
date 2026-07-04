@@ -13,6 +13,7 @@ const meta: Meta<typeof Input> = {
   args: { placeholder: "Digite algo..." },
   argTypes: {
     disabled: { control: "boolean", description: "Native disabled attribute, forwarded to the input element" },
+    elevated: { control: "boolean", description: "Adds a drop shadow around the input. Defaults to true." },
     helperText: { control: "text", description: "Text rendered below the input to provide extra context" },
     mask: {
       control: "select",
@@ -51,6 +52,11 @@ export const WithHelperText: Story = {
 // title and helperText combined
 export const WithTitleAndHelperText: Story = {
   args: { helperText: "Nunca compartilharemos seu e-mail com ninguém.", title: "E-mail" },
+}
+
+// The elevated prop set to false, removing the default drop shadow around the input
+export const Flat: Story = {
+  args: { elevated: false, title: "E-mail" },
 }
 
 // The native disabled attribute, forwarded straight through to the input element
