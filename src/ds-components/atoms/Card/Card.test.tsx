@@ -22,6 +22,14 @@ describe("Card", () => {
     expect(element).toHaveClass("custom")
   })
 
+  it("applies a default padding of 12px", () => {
+    render(<Card>Content</Card>)
+
+    const element = screen.getByText("Content")
+
+    expect(element).toHaveStyle({ padding: spacing[12] })
+  })
+
   it("applies inline styles passed via the style prop", () => {
     render(<Card style={{ padding: spacing[24] }}>Content</Card>)
 

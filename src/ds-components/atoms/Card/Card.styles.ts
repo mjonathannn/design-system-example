@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components"
 
-import { radius } from "@/foundation"
+import { radius, spacing } from "@/foundation"
 
 export type StyledCardProps = {
   $background: string
@@ -15,9 +15,10 @@ export const StyledCard = styled.div<StyledCardProps>`
 
     return css`
       background: ${$background};
-      border-radius: ${radius.md};
+      border-radius: ${radius.xl};
       border: ${$border};
       overflow: hidden;
+      padding: ${spacing[12]};
       ${$backdropFilter &&
       css`
         backdrop-filter: ${$backdropFilter};
