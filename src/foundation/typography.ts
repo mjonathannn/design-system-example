@@ -1,4 +1,7 @@
 export const typography = {
+  fontFamily: {
+    sans: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  },
   fontWeight: {
     regular: 400,
     medium: 500,
