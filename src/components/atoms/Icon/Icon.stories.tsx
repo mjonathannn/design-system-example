@@ -28,8 +28,10 @@ export default meta
 
 type Story = StoryObj<typeof Icon>
 
+// Default rendering with no variant props set
 export const Default: Story = {}
 
+// Every spacing-token-derived size available for the size prop
 export const Sizes: Story = {
   render: () => (
     <div style={{ alignItems: "center", display: "flex", gap: spacing[16] }}>
@@ -43,6 +45,7 @@ export const Sizes: Story = {
   ),
 }
 
+// Every semantic color variant available for the color prop
 export const Colors: Story = {
   render: () => (
     <div style={{ display: "flex", gap: spacing[16] }}>
@@ -58,6 +61,7 @@ export const Colors: Story = {
   ),
 }
 
+// Every icon registered in the iconMap, each labeled with its name prop value
 export const AllIcons: Story = {
   render: () => (
     <div style={{ display: "flex", flexWrap: "wrap", gap: spacing[24] }}>
@@ -71,4 +75,5 @@ export const AllIcons: Story = {
   ),
 }
 
+// The tooltip prop showing a cursor-following tooltip on hover
 export const WithTooltip: Story = { args: { name: "info", tooltip: "More information" } }

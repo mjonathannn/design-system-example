@@ -81,6 +81,7 @@ Each component folder also gets a co-located `ComponentName.stories.tsx` (CSF3 f
 - `tags: ["autodocs"]` on `meta` so Storybook generates the docs page automatically from `argTypes`/props instead of requiring a hand-written `.mdx` file.
 - Only two Storybook addons are installed: `@storybook/addon-docs` (autodocs) and `@storybook/addon-a11y` (accessibility checks), configured in `.storybook/main.ts`. **Don't add `@storybook/addon-vitest`/Chromatic/MCP addons** without an explicit ask — `storybook init` bundles those by default, but they pull in Vitest + Playwright browser binaries purely for component testing, which is out of scope (no test runner in this project).
 - `.storybook/preview.tsx` wraps every story in `<GlobalStyle />` (from `src/styles/GlobalStyle.ts`) via a decorator, so stories render with the same reset as the real app.
+- Every exported story (including `Default`) gets a one-line comment directly above it describing what it demonstrates, e.g. `// The elevated prop adding a drop shadow and removing the border` — describe the prop/behavior/variant being shown, not just restate the story name.
 
 ### Unit testing with Vitest + React Testing Library
 

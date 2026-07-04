@@ -16,10 +16,13 @@ export default meta
 
 type Story = StoryObj<typeof Card>
 
+// Default rendering with no variant props set
 export const Default: Story = {}
 
+// The elevated prop adding a drop shadow and removing the border
 export const Elevated: Story = { args: { elevated: true } }
 
+// The translucent prop at its lowest opacity level, over a colored background to show the glass effect
 export const TranslucentLow: Story = {
   args: { translucent: "low" },
   decorators: [
@@ -31,6 +34,7 @@ export const TranslucentLow: Story = {
   ],
 }
 
+// The translucent prop at its medium (default true) opacity level, over a colored background to show the glass effect
 export const TranslucentMedium: Story = {
   args: { translucent: "medium" },
   decorators: [
@@ -42,6 +46,7 @@ export const TranslucentMedium: Story = {
   ],
 }
 
+// The translucent prop at its highest opacity level, over a colored background to show the glass effect
 export const TranslucentHigh: Story = {
   args: { translucent: "high" },
   decorators: [
@@ -53,6 +58,7 @@ export const TranslucentHigh: Story = {
   ],
 }
 
+// elevated and translucent combined together on the same Card
 export const ElevatedAndTranslucent: Story = {
   args: { elevated: true, translucent: "medium" },
   decorators: [
@@ -64,4 +70,5 @@ export const ElevatedAndTranslucent: Story = {
   ],
 }
 
+// The tooltip prop showing a cursor-following tooltip on hover
 export const WithTooltip: Story = { args: { tooltip: "Extra information about this card" } }

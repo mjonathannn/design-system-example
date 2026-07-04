@@ -42,8 +42,10 @@ export default meta
 
 type Story = StoryObj<typeof Text>
 
+// Default rendering with no variant props set
 export const Default: Story = {}
 
+// Polymorphic "as" prop rendering Text as an h1, combined with a larger size/weight
 export const Heading: Story = {
   args: {
     as: "h1",
@@ -52,6 +54,7 @@ export const Heading: Story = {
   },
 }
 
+// The bold convenience prop, a shorthand for weight="bold"
 export const Bold: Story = {
   args: {
     bold: true,
@@ -59,6 +62,7 @@ export const Bold: Story = {
   },
 }
 
+// The semibold convenience prop, a shorthand for weight="semibold"
 export const Semibold: Story = {
   args: {
     children: "Semibold text via the semibold prop",
@@ -66,6 +70,7 @@ export const Semibold: Story = {
   },
 }
 
+// The style escape hatch applying one-off inline CSS on top of the variant props
 export const WithInlineStyle: Story = {
   args: {
     children: "Text with a one-off inline style override",
@@ -73,6 +78,7 @@ export const WithInlineStyle: Story = {
   },
 }
 
+// The polymorphic "as" prop rendering Text as an anchor, forwarding native anchor attributes like href/target
 export const AsLink: Story = {
   args: {
     as: "a",
@@ -83,6 +89,7 @@ export const AsLink: Story = {
   },
 }
 
+// The tooltip prop showing a cursor-following tooltip on hover
 export const WithTooltip: Story = {
   args: {
     children: "Hover me to see the tooltip",
@@ -90,6 +97,7 @@ export const WithTooltip: Story = {
   },
 }
 
+// Every semantic color variant rendered side by side
 export const Colors: Story = {
   render: () => (
     <>
