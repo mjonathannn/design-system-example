@@ -3206,7 +3206,7 @@ pretty-format@^27.0.2:
     ansi-styles "^5.0.0"
     react-is "^17.0.1"
 
-prop-types@^15.8.1:
+prop-types@15.8.1, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -3252,6 +3252,13 @@ react-docgen@^8.0.0, react-docgen@^8.0.2:
   integrity sha512-t0BRVXvbiE/o20Hfw669rLbMCDWtYZLvmJigy2f0MxsXF+71pxhR3xOkspmsO8h3ZlNzyibAmtCa3l4lYKk6gQ==
   dependencies:
     scheduler "^0.27.0"
+
+react-grid-system@^8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/react-grid-system/-/react-grid-system-8.2.1.tgz#71d279c67fca85712d22696fe2f72e95afdc8be7"
+  integrity sha512-VVWLiNZhy1xmLmfhLt4nKgLog/5MdSTccVYEMYHVWOQH8BeOaC5PTHggSY17CwLwR80WJ//2qOhRGhJd2xhbvw==
+  dependencies:
+    prop-types "15.8.1"
 
 react-hook-form@^7.80.0:
   version "7.80.0"
