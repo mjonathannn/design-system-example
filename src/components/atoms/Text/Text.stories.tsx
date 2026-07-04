@@ -13,7 +13,7 @@ const meta: Meta<typeof Text> = {
     },
     bold: {
       control: "boolean",
-      description: "Shorthand for weight=\"bold\". Takes precedence over semibold and weight.",
+      description: 'Shorthand for weight="bold". Takes precedence over semibold and weight.',
     },
     color: {
       control: "select",
@@ -21,7 +21,7 @@ const meta: Meta<typeof Text> = {
     },
     semibold: {
       control: "boolean",
-      description: "Shorthand for weight=\"semibold\". Takes precedence over weight; overridden by bold.",
+      description: 'Shorthand for weight="semibold". Takes precedence over weight; overridden by bold.',
     },
     size: {
       control: "select",

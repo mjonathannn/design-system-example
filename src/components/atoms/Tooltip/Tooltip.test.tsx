@@ -5,7 +5,11 @@ import { Tooltip } from "./Tooltip"
 
 describe("Tooltip", () => {
   it("renders its content into document.body via a portal", () => {
-    render(<Tooltip x={10} y={20}>Hint</Tooltip>)
+    render(
+      <Tooltip x={10} y={20}>
+        Hint
+      </Tooltip>,
+    )
 
     const element = screen.getByText("Hint")
 
@@ -13,7 +17,11 @@ describe("Tooltip", () => {
   })
 
   it("positions itself relative to the given x/y coordinates", () => {
-    render(<Tooltip x={10} y={20}>Hint</Tooltip>)
+    render(
+      <Tooltip x={10} y={20}>
+        Hint
+      </Tooltip>,
+    )
 
     const element = screen.getByText("Hint")
 
