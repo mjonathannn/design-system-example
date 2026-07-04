@@ -56,7 +56,7 @@ export default defineConfig([
   {
     // src/foundation/ token scales are intentionally ordered by size (xs -> 4xl, 50 -> 900),
     // not alphabetically, so only enforce alphabetical prop/destructuring order for components.
-    files: ["src/components/**/*.{ts,tsx}"],
+    files: ["src/ds-components/**/*.{ts,tsx}"],
     plugins: {
       perfectionist,
     },

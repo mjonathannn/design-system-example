@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
-import { Text } from "@/components/atoms"
+import { Text } from "@/ds-components/atoms"
 import type { ViaCepAddress } from "@/models"
 import { getAddressByCep } from "@/services"
 

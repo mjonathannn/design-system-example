@@ -13,7 +13,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `yarn build-storybook` — build the static Storybook site into `storybook-static/` (gitignored)
 - `yarn test` — run the Vitest suite once (`vitest run`)
 - `yarn test:watch` — run Vitest in watch mode
-- To run a single test file: `npx vitest run src/components/atoms/Text/Text.test.tsx` (or drop `run` for watch mode on just that file)
+- To run a single test file: `npx vitest run src/ds-components/atoms/Text/Text.test.tsx` (or drop `run` for watch mode on just that file)
 
 **Do not re-add `@storybook/addon-vitest`, `playwright`, or `@chromatic-com/storybook`** — `storybook init` adds them by default, but they were deliberately removed (see Storybook section below). Unit testing in this project is a plain standalone Vitest setup, intentionally not wired into Storybook.
 
@@ -27,13 +27,13 @@ This is a React 19 + TypeScript + Vite app, built from scratch on top of a custo
 
 `src/routes/routes.tsx` (re-exported via `src/routes/index.ts`, so it's imported as `from "./routes"`/`from "@/routes"`) is the single source of route definitions, exporting a `router` built with `react-router-dom`'s `createBrowserRouter` (a flat array of `{ element, path }` entries — no nested/layout routes yet). `main.tsx` renders `<RouterProvider router={router} />` (there is no `App.tsx` — that placeholder was replaced by `src/pages/` once routing landed). Each route's `element` is a component from `src/pages/<PageName>/`, imported via the `@/pages` barrel. A `<Link>` is rendered via `Text`'s polymorphic `as` prop (`<Text as={Link} to="/experimental">`) rather than a raw `<a>`, same as any other `as` target.
 
-### `src/pages/` holds routed views, and is intentionally outside `src/components/`
+### `src/pages/` holds routed views, and is intentionally outside `src/ds-components/`
 
-`src/pages/<PageName>/` follows the same per-component folder shape as `src/components/` (`PageName.tsx` + `PageName.styles.ts` + `index.ts`, each layer folder's `index.ts` re-exporting every page — see `src/pages/index.ts`), but pages are **not** part of the Atomic Design component layers below and don't get `.stories.tsx`/`.test.tsx`: they're routed compositions of atoms/molecules/organisms, not reusable design-system pieces documented in Storybook or unit-tested in isolation.
+`src/pages/<PageName>/` follows the same per-component folder shape as `src/ds-components/` (`PageName.tsx` + `PageName.styles.ts` + `index.ts`, each layer folder's `index.ts` re-exporting every page — see `src/pages/index.ts`), but pages are **not** part of the Atomic Design component layers below and don't get `.stories.tsx`/`.test.tsx`: they're routed compositions of atoms/molecules/organisms, not reusable design-system pieces documented in Storybook or unit-tested in isolation.
 
 ### `src/utils/` holds cross-cutting pure functions
 
-`src/utils/<moduleName>/` is for plain, framework-agnostic functions reused across multiple components/pages — not tied to any single component's folder. Each module gets its own folder mirroring the component-folder shape (`<moduleName>.ts` + `index.ts` re-exporting it, e.g. `export * from "./formats"`) and a co-located `<moduleName>.test.ts` (see `src/utils/formats/`). The top-level `src/utils/index.ts` re-exports every module folder in turn, so consumers can import from `@/utils` directly. Modules are named exports only, no default export. `formats/formats.ts` is the single source of truth for display formatting (`formatCpf`, `formatCnpj`, `formatCep`, `formatPhone`, `formatCreditCard`, `formatCurrency`, `formatExpiry`) — each takes a raw/possibly-dirty `string` and returns the formatted display string, doing its own digit-extraction and, where the format has a fixed length, truncation internally. `Input`'s `mask` prop (`src/components/molecules/Input/Input.masks.ts`) is a thin dispatcher over these same functions rather than its own implementation — don't duplicate a formatter's logic in a component when the value could instead be formatted for display via `@/utils/formats` from anywhere in the app.
+`src/utils/<moduleName>/` is for plain, framework-agnostic functions reused across multiple components/pages — not tied to any single component's folder. Each module gets its own folder mirroring the component-folder shape (`<moduleName>.ts` + `index.ts` re-exporting it, e.g. `export * from "./formats"`) and a co-located `<moduleName>.test.ts` (see `src/utils/formats/`). The top-level `src/utils/index.ts` re-exports every module folder in turn, so consumers can import from `@/utils` directly. Modules are named exports only, no default export. `formats/formats.ts` is the single source of truth for display formatting (`formatCpf`, `formatCnpj`, `formatCep`, `formatPhone`, `formatCreditCard`, `formatCurrency`, `formatExpiry`) — each takes a raw/possibly-dirty `string` and returns the formatted display string, doing its own digit-extraction and, where the format has a fixed length, truncation internally. `Input`'s `mask` prop (`src/ds-components/molecules/Input/Input.masks.ts`) is a thin dispatcher over these same functions rather than its own implementation — don't duplicate a formatter's logic in a component when the value could instead be formatted for display via `@/utils/formats` from anywhere in the app.
 
 - **Never inline `.replace(/\D/g, "")` to strip non-digit characters.** Use `stripNonDigits` exported from `@/utils/formats` instead (see its use in `Input.tsx`'s `numeric` handling and `viaCep.ts`). Keeping this in one place means a future change to what counts as "a digit" (or swapping the implementation) only has to happen once.
 
@@ -51,23 +51,23 @@ This is a React 19 + TypeScript + Vite app, built from scratch on top of a custo
 
 `spacing` and `colors.primary`/`colors.neutral` are numeric-keyed scales, but they don't mean the same thing: `spacing` keys are the pixel value itself (`spacing[16]` is `"16px"`, `spacing[24]` is `"24px"`, ...), while the color scales use abstract step numbers (`colors.primary[500]` is the base brand blue, not "500px" of anything). Don't assume one numeric-key convention applies to both.
 
-### Components follow Atomic Design
+### Components follow Atomic Design, under `src/ds-components/`
 
-UI components live under `src/components/<layer>/<ComponentName>/`, where `<layer>` is one of `atoms`, `molecules`, `organisms`, `templates` (routed pages live in `src/pages/` instead — see below). Each component gets its own PascalCase folder containing:
+UI components live under `src/ds-components/<layer>/<ComponentName>/`, where `<layer>` is one of `atoms`, `molecules`, `organisms`, `templates` (routed pages live in `src/pages/` instead — see below). Each component gets its own PascalCase folder containing:
 
 - `ComponentName.tsx` — the component as a named export (e.g. `export const Text = ...`) plus its `export type ComponentNameProps`.
 - `ComponentName.styles.ts` — the `styled-components` definitions, imported into `ComponentName.tsx`. Keep styling declarations out of the component file itself.
 - `index.ts` — barrel re-exporting everything from the component file, e.g. `export * from "./ComponentName"`.
 
-Each layer folder (`atoms/`, `molecules/`, ...) also has its own `index.ts` barrel re-exporting every component in that layer, e.g. `export * from "./Text"` (see `src/components/atoms/index.ts`) — add new components to that barrel too.
+Each layer folder (`atoms/`, `molecules/`, ...) also has its own `index.ts` barrel re-exporting every component in that layer, e.g. `export * from "./Text"` (see `src/ds-components/atoms/index.ts`) — add new components to that barrel too.
 
-`src/components/atoms/Text/` is the reference implementation: it derives its `size`/`weight` variants directly from `typography.fontSize`/`fontWeight`/`lineHeight` and its `color` variants from a semantic map (`default`/`secondary`/`muted`/`inverse`/`brand`/`success`/`warning`/`danger`/`info`) backed by `colors` — follow this pattern (semantic prop values mapped to `src/foundation` tokens, not raw hex/px values) for new atoms/molecules/organisms.
+`src/ds-components/atoms/Text/` is the reference implementation: it derives its `size`/`weight` variants directly from `typography.fontSize`/`fontWeight`/`lineHeight` and its `color` variants from a semantic map (`default`/`secondary`/`muted`/`inverse`/`brand`/`success`/`warning`/`danger`/`info`) backed by `colors` — follow this pattern (semantic prop values mapped to `src/foundation` tokens, not raw hex/px values) for new atoms/molecules/organisms.
 
 Every component also accepts a `style?: CSSProperties` prop (imported as `import type { CSSProperties } from "react"`), passed straight through to the root styled element (e.g. `<StyledText style={style}>`) as a one-off inline-style escape hatch on top of the variant props — see `Text.tsx`/`Text.styles.ts`.
 
 ### `Tooltip` and the `tooltip` prop convention
 
-`src/components/atoms/Tooltip/` provides the cursor-following tooltip balloon plus the `useTooltip` hook that any component uses to opt into a `tooltip?: string` prop:
+`src/ds-components/atoms/Tooltip/` provides the cursor-following tooltip balloon plus the `useTooltip` hook that any component uses to opt into a `tooltip?: string` prop:
 
 - `Tooltip.tsx` is the presentational balloon — it takes `x`/`y` (viewport coordinates) and `children`, and renders via `createPortal(..., document.body)` so it isn't clipped by `overflow: hidden` ancestors and always sits above other content (`zIndex.tooltip`). It has no visibility/hover logic of its own — it always renders when mounted.
 - `useTooltip(tooltip?: string)` (in `useTooltip.tsx`, co-located with `Tooltip` since it's tightly coupled — note the `.tsx` extension, required because the hook returns JSX) owns the hover/mouse-tracking state and returns `{ tooltipElement, tooltipHandlers }`. `tooltipHandlers` (`onMouseEnter`/`onMouseMove`/`onMouseLeave`) gets spread onto the component's root styled element to track the cursor and toggle visibility; `tooltipElement` is the already-built `<Tooltip>` (or `null` when not hovering / no `tooltip` text given) to render as a sibling.
@@ -146,7 +146,7 @@ export type TokenNameType = typeof tokenName
 - **Never destructure function parameters inline.** Take the full `props` (or other single argument) and destructure it on the first line of the body instead: `const { a, b } = props`, not `({ a, b }: Props) => {}`. This applies to components and plain functions alike, including `styled-components` interpolation callbacks (see `Text.styles.ts`, where the whole props object is destructured once inside the interpolation function body rather than in its parameter list). Not currently lint-enforced — no ESLint rule covers this, so review for it manually.
 - **Prefer `async`/`await` over `.then()`/`.catch()` chains.** Write `const data = await getAddressByCep(cep)` inside an `async` function rather than `getAddressByCep(cep).then(setData)`. Not lint-enforced — review manually.
 - **Prefer `try`/`catch` over `.catch()` for error handling**, once the calling function is `async` (see the previous rule) — wrap the `await` in `try`/`catch` rather than chaining `.catch()` off the promise. Note that a `useEffect` callback can't be `async` itself (its return value is reserved for an optional cleanup function), so when an effect needs to `await` something, declare a separate `async` function inside the effect and call it, rather than making the effect callback `async` or falling back to `.then()`/`.catch()` — see `Experimental.tsx`.
-- **Alphabetical property order, required before optional**, enforced by `eslint-plugin-perfectionist` but scoped to `files: ["src/components/**/*.{ts,tsx}"]` only (see `eslint.config.js`) — deliberately **not** applied to `src/foundation/`, whose token scales (`xs`→`4xl`, `50`→`900`) are ordered by size, not alphabetically:
+- **Alphabetical property order, required before optional**, enforced by `eslint-plugin-perfectionist` but scoped to `files: ["src/ds-components/**/*.{ts,tsx}"]` only (see `eslint.config.js`) — deliberately **not** applied to `src/foundation/`, whose token scales (`xs`→`4xl`, `50`→`900`) are ordered by size, not alphabetically:
   - `perfectionist/sort-object-types` sorts prop type members (`type FooProps = {...}`) alphabetically within two groups, in this order: `required-property` first, then `optional-property` (each group alphabetical on its own — see `TextProps`/`StyledTextProps`).
   - `perfectionist/sort-objects` sorts object literals and destructured patterns (e.g. `const { a, b } = props`) purely alphabetically — there's no required/optional concept at the destructuring level.
 
@@ -155,7 +155,7 @@ export type TokenNameType = typeof tokenName
 Inside a component, constants must follow this sequence (when each type is present), with each block separated by exactly one blank line:
 
 1. **`useRef`** calls
-2. **Custom hooks** (e.g. `useTooltip`, any hook from `src/components` or a shared `hooks/` folder)
+2. **Custom hooks** (e.g. `useTooltip`, any hook from `src/ds-components` or a shared `hooks/` folder)
 3. **`useState`** calls
 4. **Derived constants** (booleans and other values computed from props/state)
 

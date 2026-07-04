@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-import { Text } from "@/components/atoms"
+import { Text } from "@/ds-components/atoms"
 
 import { HomeWrapper } from "./Home.styles"
 
