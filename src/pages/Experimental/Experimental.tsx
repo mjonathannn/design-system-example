@@ -11,7 +11,16 @@ export const Experimental = () => {
   const [address, setAddress] = useState<ViaCepAddress | null>(null)
 
   useEffect(() => {
-    getAddressByCep("01310-100").then(setAddress).catch(console.error)
+    const fetchAddress = async () => {
+      try {
+        const data = await getAddressByCep("01310-100")
+        setAddress(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetchAddress()
   }, [])
 
   return (
