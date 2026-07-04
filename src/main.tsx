@@ -1,14 +1,15 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
+import { RouterProvider } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 
-import App from "./App.tsx"
+import { router } from "./routes"
 import GlobalStyle from "./styles/GlobalStyle"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <GlobalStyle />
-    <App />
+    <RouterProvider router={router} />
     <ToastContainer />
   </StrictMode>,
 )

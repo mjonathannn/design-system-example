@@ -21,7 +21,15 @@ To type-check without building: `npx tsc -b --noEmit` (project uses TS project r
 
 ## Architecture
 
-This is a React 19 + TypeScript + Vite app. `src/App.tsx` was reset to a minimal placeholder component to build the real app from scratch on top of a custom design-token layer in `src/foundation/`. Styling is done with `styled-components` (no plain CSS files) — the global reset that used to live in `index.css` is now `src/styles/GlobalStyle.ts`, a `createGlobalStyle`, rendered once in `main.tsx` alongside `<App />`.
+This is a React 19 + TypeScript + Vite app, built from scratch on top of a custom design-token layer in `src/foundation/`. Styling is done with `styled-components` (no plain CSS files) — the global reset that used to live in `index.css` is now `src/styles/GlobalStyle.ts`, a `createGlobalStyle`, rendered once in `main.tsx` alongside the router.
+
+### Routing
+
+`src/routes/routes.tsx` (re-exported via `src/routes/index.ts`, so it's imported as `from "./routes"`/`from "@/routes"`) is the single source of route definitions, exporting a `router` built with `react-router-dom`'s `createBrowserRouter` (a flat array of `{ element, path }` entries — no nested/layout routes yet). `main.tsx` renders `<RouterProvider router={router} />` (there is no `App.tsx` — that placeholder was replaced by `src/pages/` once routing landed). Each route's `element` is a component from `src/pages/<PageName>/`, imported via the `@/pages` barrel. A `<Link>` is rendered via `Text`'s polymorphic `as` prop (`<Text as={Link} to="/experimental">`) rather than a raw `<a>`, same as any other `as` target.
+
+### `src/pages/` holds routed views, and is intentionally outside `src/components/`
+
+`src/pages/<PageName>/` follows the same per-component folder shape as `src/components/` (`PageName.tsx` + `PageName.styles.ts` + `index.ts`, each layer folder's `index.ts` re-exporting every page — see `src/pages/index.ts`), but pages are **not** part of the Atomic Design component layers below and don't get `.stories.tsx`/`.test.tsx`: they're routed compositions of atoms/molecules/organisms, not reusable design-system pieces documented in Storybook or unit-tested in isolation.
 
 ### `src/foundation/` is the single source of design tokens
 
@@ -31,7 +39,7 @@ This is a React 19 + TypeScript + Vite app. `src/App.tsx` was reset to a minimal
 
 ### Components follow Atomic Design
 
-UI components live under `src/components/<layer>/<ComponentName>/`, where `<layer>` is one of `atoms`, `molecules`, `organisms`, `templates`, `pages`. Each component gets its own PascalCase folder containing:
+UI components live under `src/components/<layer>/<ComponentName>/`, where `<layer>` is one of `atoms`, `molecules`, `organisms`, `templates` (routed pages live in `src/pages/` instead — see below). Each component gets its own PascalCase folder containing:
 
 - `ComponentName.tsx` — the component as a named export (e.g. `export const Text = ...`) plus its `export type ComponentNameProps`.
 - `ComponentName.styles.ts` — the `styled-components` definitions, imported into `ComponentName.tsx`. Keep styling declarations out of the component file itself.
