@@ -5,7 +5,7 @@ import { spacing } from "@/foundation"
 import { Card } from "./Card"
 
 const meta: Meta<typeof Card> = {
-  args: { children: "Card content goes here." },
+  args: { children: "O conteúdo do card fica aqui." },
   argTypes: { translucent: { control: "select", options: [false, true, "low", "medium", "high"] } },
   component: Card,
   tags: ["autodocs"],
@@ -71,4 +71,4 @@ export const ElevatedAndTranslucent: Story = {
 }
 
 // The tooltip prop showing a cursor-following tooltip on hover
-export const WithTooltip: Story = { args: { tooltip: "Extra information about this card" } }
+export const WithTooltip: Story = { args: { tooltip: "Informação extra sobre este card" } }

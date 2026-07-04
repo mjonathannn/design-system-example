@@ -76,4 +76,4 @@ export const AllIcons: Story = {
 }
 
 // The tooltip prop showing a cursor-following tooltip on hover
-export const WithTooltip: Story = { args: { name: "info", tooltip: "More information" } }
+export const WithTooltip: Story = { args: { name: "info", tooltip: "Mais informações" } }

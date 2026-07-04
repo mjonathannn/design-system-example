@@ -4,7 +4,7 @@ import { Text } from "./Text"
 
 const meta: Meta<typeof Text> = {
   args: {
-    children: "The quick brown fox jumps over the lazy dog",
+    children: "Um pequeno jabuti xereta viu dez cegonhas felizes",
   },
   argTypes: {
     align: {
@@ -58,14 +58,14 @@ export const Heading: Story = {
 export const Bold: Story = {
   args: {
     bold: true,
-    children: "Bold text via the bold prop",
+    children: "Texto em negrito via a prop bold",
   },
 }
 
 // The semibold convenience prop, a shorthand for weight="semibold"
 export const Semibold: Story = {
   args: {
-    children: "Semibold text via the semibold prop",
+    children: "Texto semibold via a prop semibold",
     semibold: true,
   },
 }
@@ -73,7 +73,7 @@ export const Semibold: Story = {
 // The style escape hatch applying one-off inline CSS on top of the variant props
 export const WithInlineStyle: Story = {
   args: {
-    children: "Text with a one-off inline style override",
+    children: "Texto com uma substituição de estilo inline pontual",
     style: { textDecoration: "underline", textTransform: "uppercase" },
   },
 }
@@ -82,7 +82,7 @@ export const WithInlineStyle: Story = {
 export const AsLink: Story = {
   args: {
     as: "a",
-    children: "Text rendered as a link",
+    children: "Texto renderizado como um link",
     color: "brand",
     href: "https://example.com",
     target: "_blank",
@@ -92,8 +92,8 @@ export const AsLink: Story = {
 // The tooltip prop showing a cursor-following tooltip on hover
 export const WithTooltip: Story = {
   args: {
-    children: "Hover me to see the tooltip",
-    tooltip: "Helpful hint that follows your cursor",
+    children: "Passe o mouse para ver a tooltip",
+    tooltip: "Dica útil que segue o cursor",
   },
 }
 

@@ -4,7 +4,7 @@ import { Tooltip } from "./Tooltip"
 
 const meta: Meta<typeof Tooltip> = {
   args: {
-    children: "Helpful hint",
+    children: "Dica útil",
     x: 0,
     y: 0,
   },
