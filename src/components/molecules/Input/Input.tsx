@@ -2,6 +2,7 @@ import type { ChangeEvent, ComponentPropsWithoutRef, CSSProperties } from "react
 import { forwardRef, useId } from "react"
 
 import { Text } from "@/components/atoms"
+import { stripNonDigits } from "@/utils/formats"
 
 import type { MaskType } from "./Input.masks"
 import { applyMask } from "./Input.masks"
@@ -30,7 +31,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   // mobile browsers a numeric keyboard. mask takes precedence over numeric when both are set.
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (mask) event.target.value = applyMask(mask, event.target.value)
-    else if (numeric) event.target.value = event.target.value.replace(/\D/g, "")
+    else if (numeric) event.target.value = stripNonDigits(event.target.value)
     onChange?.(event)
   }
 
