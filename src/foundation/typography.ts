@@ -17,6 +17,9 @@ export const typography = {
     "2xl": 24,
     "3xl": 30,
     "4xl": 36,
+    "5xl": 48,
+    "6xl": 60,
+    "7xl": 72,
   },
   lineHeight: {
     xs: 1.5,
@@ -27,6 +30,9 @@ export const typography = {
     "2xl": 1.3,
     "3xl": 1.2,
     "4xl": 1.15,
+    "5xl": 1.1,
+    "6xl": 1.05,
+    "7xl": 1,
   },
 }
 

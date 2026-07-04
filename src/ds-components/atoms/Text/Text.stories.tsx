@@ -25,7 +25,7 @@ const meta: Meta<typeof Text> = {
     },
     size: {
       control: "select",
-      options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"],
+      options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl"],
     },
     weight: {
       control: "select",
@@ -95,6 +95,23 @@ export const WithTooltip: Story = {
     children: "Passe o mouse para ver a tooltip",
     tooltip: "Dica útil que segue o cursor",
   },
+}
+
+// The display sizes above 4xl, meant for hero-scale headings
+export const LargeSizes: Story = {
+  render: () => (
+    <>
+      <Text as="h1" size="5xl">
+        5xl
+      </Text>
+      <Text as="h1" size="6xl">
+        6xl
+      </Text>
+      <Text as="h1" size="7xl">
+        7xl
+      </Text>
+    </>
+  ),
 }
 
 // Every semantic color variant rendered side by side

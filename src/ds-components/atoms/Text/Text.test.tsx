@@ -75,6 +75,15 @@ describe("Text", () => {
     expect(screen.getByText("Both")).toHaveStyle({ fontWeight: typography.fontWeight.bold })
   })
 
+  it("applies a display size above 4xl", () => {
+    render(<Text size="7xl">Display</Text>)
+
+    expect(screen.getByText("Display")).toHaveStyle({
+      fontSize: `${typography.fontSize["7xl"]}px`,
+      lineHeight: `${typography.lineHeight["7xl"]}`,
+    })
+  })
+
   it("shows the tooltip on hover and hides it on mouse leave", () => {
     const tooltipText = "Helpful hint"
 
