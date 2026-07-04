@@ -6,19 +6,19 @@ import { Input } from "./Input"
 const ReactHookFormExample = () => {
   const { register } = useForm<{ email: string }>()
 
-  return <Input helperText="Registered via react-hook-form's register" title="Email" {...register("email")} />
+  return <Input helperText="Registrado via register do react-hook-form" title="E-mail" {...register("email")} />
 }
 
 const meta: Meta<typeof Input> = {
-  args: { placeholder: "Type something..." },
+  args: { placeholder: "Digite algo..." },
   argTypes: {
     disabled: { control: "boolean", description: "Native disabled attribute, forwarded to the input element" },
     helperText: { control: "text", description: "Text rendered below the input to provide extra context" },
     mask: {
       control: "select",
       description:
-        "Formats the value as a CEP, CPF, CNPJ, credit card, expiry date or phone number while typing. Takes precedence over numeric.",
-      options: [undefined, "cep", "cpf", "cnpj", "creditCard", "expiry", "phone"],
+        "Formats the value as a CEP, CPF, CNPJ, credit card, currency (BRL), expiry date or phone number while typing. Takes precedence over numeric.",
+      options: [undefined, "cep", "cpf", "cnpj", "creditCard", "currency", "expiry", "phone"],
     },
     numeric: {
       control: "boolean",
@@ -40,22 +40,22 @@ export const Default: Story = {}
 
 // The title prop rendering a label above the input, linked via htmlFor/id
 export const WithTitle: Story = {
-  args: { title: "Email" },
+  args: { title: "E-mail" },
 }
 
 // The helperText prop rendering supporting text below the input
 export const WithHelperText: Story = {
-  args: { helperText: "We'll never share your email with anyone else." },
+  args: { helperText: "Nunca compartilharemos seu e-mail com ninguém." },
 }
 
 // title and helperText combined
 export const WithTitleAndHelperText: Story = {
-  args: { helperText: "We'll never share your email with anyone else.", title: "Email" },
+  args: { helperText: "Nunca compartilharemos seu e-mail com ninguém.", title: "E-mail" },
 }
 
 // The native disabled attribute, forwarded straight through to the input element
 export const Disabled: Story = {
-  args: { disabled: true, title: "Email", value: "disabled@example.com" },
+  args: { disabled: true, title: "E-mail", value: "desabilitado@exemplo.com" },
 }
 
 // Uncontrolled by React, wired up entirely through react-hook-form's register (relies on the forwardRef wiring)
@@ -65,7 +65,7 @@ export const WithReactHookForm: Story = {
 
 // The numeric prop strips any non-digit character as the user types or pastes
 export const Numeric: Story = {
-  args: { numeric: true, placeholder: "0000 0000 0000 0000", title: "Card number" },
+  args: { numeric: true, placeholder: "0", title: "Quantidade" },
 }
 
 // The mask prop formatting digits as a CEP (00000-000) while typing
@@ -85,20 +85,25 @@ export const MaskCnpj: Story = {
 
 // The mask prop formatting digits as a phone number, switching between landline and mobile splits
 export const MaskPhone: Story = {
-  args: { mask: "phone", placeholder: "(00) 00000-0000", title: "Phone" },
+  args: { mask: "phone", placeholder: "(00) 00000-0000", title: "Telefone" },
 }
 
 // The mask prop formatting digits as a 16-digit credit card number in groups of 4
 export const MaskCreditCard: Story = {
-  args: { mask: "creditCard", placeholder: "0000 0000 0000 0000", title: "Card number" },
+  args: { mask: "creditCard", placeholder: "0000 0000 0000 0000", title: "Número do cartão" },
+}
+
+// The mask prop formatting digits as BRL currency (R$ 0,00), growing from the right as cents
+export const MaskCurrency: Story = {
+  args: { mask: "currency", placeholder: "R$ 0,00", title: "Valor" },
 }
 
 // The mask prop formatting digits as a card expiry date (MM/AA) while typing
 export const MaskExpiry: Story = {
-  args: { mask: "expiry", placeholder: "MM/AA", title: "Expiry date" },
+  args: { mask: "expiry", placeholder: "MM/AA", title: "Validade" },
 }
 
 // No dedicated mask for CVV: it's just digits with a fixed length, already covered by numeric + the native maxLength attribute
 export const Cvv: Story = {
-  args: { helperText: "3 digits, on the back of your card", maxLength: 3, numeric: true, title: "CVV" },
+  args: { helperText: "3 dígitos, no verso do cartão", maxLength: 3, numeric: true, title: "CVV" },
 }

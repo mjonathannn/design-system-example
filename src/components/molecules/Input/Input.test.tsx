@@ -146,6 +146,16 @@ describe("Input", () => {
     expect(input.value).toBe("1234 5678 9012 3456")
   })
 
+  it("formats the value as BRL currency while typing", () => {
+    render(<Input mask="currency" placeholder="Amount" />)
+
+    const input = screen.getByPlaceholderText("Amount") as HTMLInputElement
+
+    fireEvent.change(input, { target: { value: "1234567" } })
+
+    expect(input.value).toBe("R$ 12.345,67")
+  })
+
   it("formats the value as a card expiry date while typing", () => {
     render(<Input mask="expiry" placeholder="MM/AA" />)
 

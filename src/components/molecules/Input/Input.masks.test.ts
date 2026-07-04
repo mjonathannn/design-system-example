@@ -77,4 +77,26 @@ describe("applyMask", () => {
     expect(applyMask("expiry", "12/28")).toBe("12/28")
     expect(applyMask("expiry", "12289999")).toBe("12/28")
   })
+
+  it("masks a BRL currency value, growing from the right as cents while digits are typed", () => {
+    expect(applyMask("currency", "")).toBe("R$ 0,00")
+    expect(applyMask("currency", "5")).toBe("R$ 0,05")
+    expect(applyMask("currency", "50")).toBe("R$ 0,50")
+    expect(applyMask("currency", "500")).toBe("R$ 5,00")
+    expect(applyMask("currency", "1234")).toBe("R$ 12,34")
+  })
+
+  it("inserts thousands separators for larger currency values", () => {
+    expect(applyMask("currency", "1234567")).toBe("R$ 12.345,67")
+    expect(applyMask("currency", "1234567890")).toBe("R$ 12.345.678,90")
+  })
+
+  it("ignores non-digit characters and leading zeros in a currency value", () => {
+    expect(applyMask("currency", "R$ 12.345,67")).toBe("R$ 12.345,67")
+    expect(applyMask("currency", "00050")).toBe("R$ 0,50")
+  })
+
+  it("does not truncate a currency value, unlike the fixed-length masks", () => {
+    expect(applyMask("currency", "123456789012")).toBe("R$ 1.234.567.890,12")
+  })
 })
