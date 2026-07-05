@@ -104,6 +104,7 @@ export const Translucent: Story = {
   render: () => (
     <div
       style={{
+        alignItems: "center",
         background: "linear-gradient(135deg, #3D5778 0%, #4B87D6 100%)",
         display: "flex",
         gap: spacing[8],
@@ -129,7 +130,7 @@ export const Translucent: Story = {
 // Every semantic color variant rendered side by side
 export const Colors: Story = {
   render: () => (
-    <div style={{ display: "flex", gap: spacing[8] }}>
+    <div style={{ alignItems: "center", display: "flex", gap: spacing[8] }}>
       <Tag color="brand">brand</Tag>
       <Tag color="danger">danger</Tag>
       <Tag color="default">default</Tag>
@@ -146,7 +147,7 @@ export const Colors: Story = {
 // The outlined variant, a transparent background with a colored border and text, for every color
 export const Outlined: Story = {
   render: () => (
-    <div style={{ display: "flex", gap: spacing[8] }}>
+    <div style={{ alignItems: "center", display: "flex", gap: spacing[8] }}>
       <Tag color="brand" variant="outlined">
         brand
       </Tag>
@@ -181,7 +182,7 @@ export const Outlined: Story = {
 // The soft variant, a light tint background with a matching-color border and darker text, for every color
 export const Soft: Story = {
   render: () => (
-    <div style={{ display: "flex", gap: spacing[8] }}>
+    <div style={{ alignItems: "center", display: "flex", gap: spacing[8] }}>
       <Tag color="brand" variant="soft">
         brand
       </Tag>

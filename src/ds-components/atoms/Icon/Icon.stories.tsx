@@ -48,7 +48,7 @@ export const Sizes: Story = {
 // Every semantic color variant available for the color prop
 export const Colors: Story = {
   render: () => (
-    <div style={{ display: "flex", gap: spacing[16] }}>
+    <div style={{ alignItems: "center", display: "flex", gap: spacing[16] }}>
       <Icon color="brand" name="bell" />
       <Icon color="danger" name="bell" />
       <Icon color="default" name="bell" />

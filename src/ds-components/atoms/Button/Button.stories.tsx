@@ -145,7 +145,7 @@ export const WithTooltip: Story = {
 // All three variants rendered side by side
 export const Variants: Story = {
   render: () => (
-    <div style={{ display: "flex", gap: spacing[8] }}>
+    <div style={{ alignItems: "center", display: "flex", gap: spacing[8] }}>
       <Button variant="filled">Filled</Button>
       <Button variant="outlined">Outlined</Button>
       <Button variant="link">Link</Button>
@@ -156,7 +156,7 @@ export const Variants: Story = {
 // All three sizes rendered side by side
 export const Sizes: Story = {
   render: () => (
-    <div style={{ display: "flex", gap: spacing[8] }}>
+    <div style={{ alignItems: "center", display: "flex", gap: spacing[8] }}>
       <Button size="small">Small</Button>
       <Button size="medium">Medium</Button>
       <Button size="large">Large</Button>
