@@ -12,6 +12,10 @@ const meta: Meta<typeof Tag> = {
       control: "select",
       options: ["default", "secondary", "muted", "inverse", "brand", "success", "warning", "danger", "info"],
     },
+    elevated: {
+      control: "boolean",
+      description: "Adds a drop shadow around the tag. Defaults to true.",
+    },
     endIcon: {
       control: false,
       description: "Icon element rendered after the tag's label.",
@@ -45,6 +49,13 @@ export const Default: Story = {}
 export const WithTooltip: Story = {
   args: {
     tooltip: "Informação extra sobre esta tag",
+  },
+}
+
+// The elevated prop set to false, removing the default drop shadow around the tag
+export const Flat: Story = {
+  args: {
+    elevated: false,
   },
 }
 

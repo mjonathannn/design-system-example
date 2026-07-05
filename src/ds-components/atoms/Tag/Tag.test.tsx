@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
-import { colors } from "@/foundation"
+import { colors, shadows } from "@/foundation"
 
 import { Tag } from "./Tag"
 
@@ -70,6 +70,18 @@ describe("Tag", () => {
       border: `1px solid ${colors.success[50]}`,
       color: colors.success[700],
     })
+  })
+
+  it("has a drop shadow by default", () => {
+    render(<Tag>Novo</Tag>)
+
+    expect(screen.getByText("Novo")).toHaveStyle({ boxShadow: shadows.xs })
+  })
+
+  it("removes the drop shadow when elevated is false", () => {
+    render(<Tag elevated={false}>Novo</Tag>)
+
+    expect(screen.getByText("Novo")).toHaveStyle({ boxShadow: shadows.none })
   })
 
   it("does not have a click handler or button role", () => {

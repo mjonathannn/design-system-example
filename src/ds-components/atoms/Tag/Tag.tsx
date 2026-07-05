@@ -8,6 +8,7 @@ export type TagProps = {
   children: ReactNode
   className?: string
   color?: TagColor
+  elevated?: boolean
   endIcon?: ReactNode
   startIcon?: ReactNode
   style?: CSSProperties
@@ -16,7 +17,17 @@ export type TagProps = {
 }
 
 export const Tag = (props: TagProps) => {
-  const { children, className, color = "default", endIcon, startIcon, style, tooltip, variant = "solid" } = props
+  const {
+    children,
+    className,
+    color = "default",
+    elevated = true,
+    endIcon,
+    startIcon,
+    style,
+    tooltip,
+    variant = "solid",
+  } = props
 
   const { tooltipElement, tooltipHandlers } = useTooltip(tooltip)
 
@@ -28,6 +39,7 @@ export const Tag = (props: TagProps) => {
         $background={background}
         $border={border}
         $color={textColor}
+        $elevated={elevated}
         className={className}
         style={style}
         {...tooltipHandlers}

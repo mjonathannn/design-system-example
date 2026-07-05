@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components"
 
-import { colors, radius, spacing, typography } from "@/foundation"
+import { colors, radius, shadows, spacing, typography } from "@/foundation"
 
 export type TagColor =
   | "brand"
@@ -27,7 +27,11 @@ export const tagColorMap: Record<TagVariant, Record<TagColor, TagColorConfig>> =
   clear: {
     brand: { background: colors.primary[50], border: `1px solid ${colors.primary[50]}`, color: colors.primary[700] },
     danger: { background: colors.danger[50], border: `1px solid ${colors.danger[50]}`, color: colors.danger[700] },
-    default: { background: colors.neutral[100], border: `1px solid ${colors.neutral[100]}`, color: colors.neutral[900] },
+    default: {
+      background: colors.neutral[100],
+      border: `1px solid ${colors.neutral[100]}`,
+      color: colors.neutral[900],
+    },
     info: { background: colors.info[50], border: `1px solid ${colors.info[50]}`, color: colors.info[700] },
     inverse: {
       background: "rgba(255, 255, 255, 0.15)",
@@ -35,7 +39,11 @@ export const tagColorMap: Record<TagVariant, Record<TagColor, TagColorConfig>> =
       color: colors.neutral[0],
     },
     muted: { background: colors.neutral[50], border: `1px solid ${colors.neutral[50]}`, color: colors.neutral[600] },
-    secondary: { background: colors.neutral[100], border: `1px solid ${colors.neutral[100]}`, color: colors.neutral[700] },
+    secondary: {
+      background: colors.neutral[100],
+      border: `1px solid ${colors.neutral[100]}`,
+      color: colors.neutral[700],
+    },
     success: { background: colors.success[50], border: `1px solid ${colors.success[50]}`, color: colors.success[700] },
     warning: { background: colors.warning[50], border: `1px solid ${colors.warning[50]}`, color: colors.warning[700] },
   },
@@ -67,17 +75,19 @@ export type StyledTagProps = {
   $background: string
   $color: string
   $border?: string
+  $elevated?: boolean
 }
 
 export const StyledTag = styled.span<StyledTagProps>`
   ${(props) => {
-    const { $background, $border, $color } = props
+    const { $background, $border, $color, $elevated } = props
 
     return css`
       align-items: center;
       background: ${$background};
       border: ${$border ?? "1px solid transparent"};
       border-radius: ${radius.full};
+      box-shadow: ${$elevated ? shadows.xs : shadows.none};
       color: ${$color};
       display: inline-flex;
       font-size: ${typography.fontSize.sm}px;
