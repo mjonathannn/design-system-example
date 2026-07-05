@@ -22,7 +22,7 @@ const resolveTranslucentLevel = (value: TranslucentLevel | true): TranslucentLev
   value === true ? "medium" : value
 
 export const Card = (props: CardProps) => {
-  const { children, className, elevated, style, tooltip, translucent } = props
+  const { children, className, elevated = true, style, tooltip, translucent } = props
 
   const { tooltipElement, tooltipHandlers } = useTooltip(tooltip)
 

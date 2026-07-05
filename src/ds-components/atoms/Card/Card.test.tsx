@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
-import { spacing } from "@/foundation"
+import { colors, spacing } from "@/foundation"
 
 import { Card } from "./Card"
 
@@ -28,6 +28,22 @@ describe("Card", () => {
     const element = screen.getByText("Content")
 
     expect(element).toHaveStyle({ padding: spacing[12] })
+  })
+
+  it("removes the border by default (elevated)", () => {
+    render(<Card>Content</Card>)
+
+    expect(screen.getByText("Content")).toHaveStyle({ borderStyle: "none" })
+  })
+
+  it("keeps the border when elevated is false", () => {
+    render(<Card elevated={false}>Content</Card>)
+
+    expect(screen.getByText("Content")).toHaveStyle({
+      borderColor: colors.neutral[100],
+      borderStyle: "solid",
+      borderWidth: "1px",
+    })
   })
 
   it("applies inline styles passed via the style prop", () => {

@@ -6,7 +6,10 @@ import { Card } from "./Card"
 
 const meta: Meta<typeof Card> = {
   args: { children: "O conteúdo do card fica aqui." },
-  argTypes: { translucent: { control: "select", options: [false, true, "low", "medium", "high"] } },
+  argTypes: {
+    elevated: { control: "boolean", description: "Adds a drop shadow and removes the border. Defaults to true." },
+    translucent: { control: "select", options: [false, true, "low", "medium", "high"] },
+  },
   component: Card,
   tags: ["autodocs"],
   title: "Atoms/Card",
@@ -19,8 +22,8 @@ type Story = StoryObj<typeof Card>
 // Default rendering with no variant props set
 export const Default: Story = {}
 
-// The elevated prop adding a drop shadow and removing the border
-export const Elevated: Story = { args: { elevated: true } }
+// The elevated prop set to false, removing the default drop shadow and restoring the border
+export const Flat: Story = { args: { elevated: false } }
 
 // The translucent prop at its lowest opacity level, over a colored background to show the glass effect
 export const TranslucentLow: Story = {
