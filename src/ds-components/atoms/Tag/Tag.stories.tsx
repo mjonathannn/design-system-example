@@ -21,6 +21,14 @@ const meta: Meta<typeof Tag> = {
       control: false,
       description: "Icon element rendered after the tag's label.",
     },
+    fontSize: {
+      control: "select",
+      options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl"],
+    },
+    fontWeight: {
+      control: "select",
+      options: ["regular", "medium", "semibold", "bold"],
+    },
     startIcon: {
       control: false,
       description: "Icon element rendered before the tag's label.",
@@ -57,6 +65,15 @@ export const WithTooltip: Story = {
 export const Flat: Story = {
   args: {
     elevated: false,
+  },
+}
+
+// The fontSize and fontWeight props overriding the tag's default typography tokens
+export const WithFontSizeAndFontWeight: Story = {
+  args: {
+    children: "Destaque",
+    fontSize: "lg",
+    fontWeight: "bold",
   },
 }
 

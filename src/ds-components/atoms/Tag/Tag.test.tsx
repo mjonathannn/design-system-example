@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
-import { colors, shadows } from "@/foundation"
+import { colors, shadows, typography } from "@/foundation"
 
 import { Tag } from "./Tag"
 
@@ -82,6 +82,28 @@ describe("Tag", () => {
     render(<Tag elevated={false}>Novo</Tag>)
 
     expect(screen.getByText("Novo")).toHaveStyle({ boxShadow: shadows.none })
+  })
+
+  it("defaults to a small font size and medium font weight", () => {
+    render(<Tag>Novo</Tag>)
+
+    expect(screen.getByText("Novo")).toHaveStyle({
+      fontSize: `${typography.fontSize.sm}px`,
+      fontWeight: typography.fontWeight.medium,
+    })
+  })
+
+  it("applies the fontSize and fontWeight props", () => {
+    render(
+      <Tag fontSize="lg" fontWeight="bold">
+        Novo
+      </Tag>,
+    )
+
+    expect(screen.getByText("Novo")).toHaveStyle({
+      fontSize: `${typography.fontSize.lg}px`,
+      fontWeight: typography.fontWeight.bold,
+    })
   })
 
   it("does not have a click handler or button role", () => {

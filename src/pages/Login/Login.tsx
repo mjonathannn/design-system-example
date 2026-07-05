@@ -17,7 +17,7 @@ export const Login = () => {
                 success
               </Tag>
 
-              <Text as="p" color="inverse" size="7xl" bold>
+              <Text as="p" color="inverse" fontSize="7xl" bold>
                 Gestão escolar que parece simples, mas opera em 360º.
               </Text>
             </Card>

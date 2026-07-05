@@ -13,24 +13,24 @@ const meta: Meta<typeof Text> = {
     },
     bold: {
       control: "boolean",
-      description: 'Shorthand for weight="bold". Takes precedence over semibold and weight.',
+      description: 'Shorthand for fontWeight="bold". Takes precedence over semibold and fontWeight.',
     },
     color: {
       control: "select",
       options: ["default", "secondary", "muted", "inverse", "brand", "success", "warning", "danger", "info"],
     },
-    semibold: {
-      control: "boolean",
-      description: 'Shorthand for weight="semibold". Takes precedence over weight; overridden by bold.',
-    },
-    size: {
+    fontSize: {
       control: "select",
       options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl"],
     },
-    weight: {
+    fontWeight: {
       control: "select",
       description: "Explicit font weight. Ignored when bold or semibold is set.",
       options: ["regular", "medium", "semibold", "bold"],
+    },
+    semibold: {
+      control: "boolean",
+      description: 'Shorthand for fontWeight="semibold". Takes precedence over fontWeight; overridden by bold.',
     },
   },
   component: Text,
@@ -45,16 +45,16 @@ type Story = StoryObj<typeof Text>
 // Default rendering with no variant props set
 export const Default: Story = {}
 
-// Polymorphic "as" prop rendering Text as an h1, combined with a larger size/weight
+// Polymorphic "as" prop rendering Text as an h1, combined with a larger fontSize/fontWeight
 export const Heading: Story = {
   args: {
     as: "h1",
-    size: "3xl",
-    weight: "bold",
+    fontSize: "3xl",
+    fontWeight: "bold",
   },
 }
 
-// The bold convenience prop, a shorthand for weight="bold"
+// The bold convenience prop, a shorthand for fontWeight="bold"
 export const Bold: Story = {
   args: {
     bold: true,
@@ -62,7 +62,7 @@ export const Bold: Story = {
   },
 }
 
-// The semibold convenience prop, a shorthand for weight="semibold"
+// The semibold convenience prop, a shorthand for fontWeight="semibold"
 export const Semibold: Story = {
   args: {
     children: "Texto semibold via a prop semibold",
@@ -101,13 +101,13 @@ export const WithTooltip: Story = {
 export const LargeSizes: Story = {
   render: () => (
     <>
-      <Text as="h1" size="5xl">
+      <Text as="h1" fontSize="5xl">
         5xl
       </Text>
-      <Text as="h1" size="6xl">
+      <Text as="h1" fontSize="6xl">
         6xl
       </Text>
-      <Text as="h1" size="7xl">
+      <Text as="h1" fontSize="7xl">
         7xl
       </Text>
     </>

@@ -15,6 +15,9 @@ export type TagColor =
 
 export type TagVariant = "outlined" | "soft" | "solid"
 
+export type TagFontSize = keyof typeof typography.fontSize
+export type TagFontWeight = keyof typeof typography.fontWeight
+
 type TagColorConfig = {
   background: string
   color: string
@@ -74,13 +77,15 @@ export const tagColorMap: Record<TagVariant, Record<TagColor, TagColorConfig>> =
 export type StyledTagProps = {
   $background: string
   $color: string
+  $fontSize: TagFontSize
+  $fontWeight: TagFontWeight
   $border?: string
   $elevated?: boolean
 }
 
 export const StyledTag = styled.span<StyledTagProps>`
   ${(props) => {
-    const { $background, $border, $color, $elevated } = props
+    const { $background, $border, $color, $elevated, $fontSize, $fontWeight } = props
 
     return css`
       align-items: center;
@@ -90,8 +95,8 @@ export const StyledTag = styled.span<StyledTagProps>`
       box-shadow: ${$elevated ? shadows.xs : shadows.none};
       color: ${$color};
       display: inline-flex;
-      font-size: ${typography.fontSize.sm}px;
-      font-weight: ${typography.fontWeight.medium};
+      font-size: ${typography.fontSize[$fontSize]}px;
+      font-weight: ${typography.fontWeight[$fontWeight]};
       gap: ${spacing[8]};
       justify-content: center;
       padding: ${spacing[4]} ${spacing[12]};

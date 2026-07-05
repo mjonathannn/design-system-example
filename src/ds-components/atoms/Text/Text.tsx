@@ -3,7 +3,7 @@ import type { ComponentPropsWithoutRef, CSSProperties, ElementType, ReactNode } 
 import { colors } from "@/foundation"
 
 import { useTooltip } from "../Tooltip"
-import type { TextAlign, TextSize, TextWeight } from "./Text.styles"
+import type { TextAlign, TextFontSize, TextFontWeight } from "./Text.styles"
 import { StyledText } from "./Text.styles"
 
 type TextColor = "brand" | "danger" | "default" | "info" | "inverse" | "muted" | "secondary" | "success" | "warning"
@@ -27,11 +27,11 @@ type TextOwnProps<C extends ElementType> = {
   bold?: boolean
   className?: string
   color?: TextColor
+  fontSize?: TextFontSize
+  fontWeight?: TextFontWeight
   semibold?: boolean
-  size?: TextSize
   style?: CSSProperties
   tooltip?: string
-  weight?: TextWeight
 }
 
 export type TextProps<C extends ElementType = "p"> = TextOwnProps<C> &
@@ -45,27 +45,27 @@ export const Text = <C extends ElementType = "p">(props: TextProps<C>) => {
     children,
     className,
     color = "default",
+    fontSize = "md",
+    fontWeight = "regular",
     semibold,
-    size = "md",
     style,
     tooltip,
-    weight = "regular",
     ...rest
   } = props
 
   const { tooltipElement, tooltipHandlers } = useTooltip(tooltip)
 
-  let resolvedWeight: TextWeight = weight
-  if (bold) resolvedWeight = "bold"
-  else if (semibold) resolvedWeight = "semibold"
+  let resolvedFontWeight: TextFontWeight = fontWeight
+  if (bold) resolvedFontWeight = "bold"
+  else if (semibold) resolvedFontWeight = "semibold"
 
   return (
     <>
       <StyledText
         $align={align}
         $color={colorMap[color]}
-        $size={size}
-        $weight={resolvedWeight}
+        $fontSize={fontSize}
+        $fontWeight={resolvedFontWeight}
         as={as}
         className={className}
         style={style}

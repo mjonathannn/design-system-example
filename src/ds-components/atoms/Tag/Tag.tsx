@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react"
 
 import { useTooltip } from "../Tooltip"
-import type { TagColor, TagVariant } from "./Tag.styles"
+import type { TagColor, TagFontSize, TagFontWeight, TagVariant } from "./Tag.styles"
 import { StyledTag, tagColorMap } from "./Tag.styles"
 
 export type TagProps = {
@@ -10,6 +10,8 @@ export type TagProps = {
   color?: TagColor
   elevated?: boolean
   endIcon?: ReactNode
+  fontSize?: TagFontSize
+  fontWeight?: TagFontWeight
   startIcon?: ReactNode
   style?: CSSProperties
   tooltip?: string
@@ -23,6 +25,8 @@ export const Tag = (props: TagProps) => {
     color = "default",
     elevated = true,
     endIcon,
+    fontSize = "sm",
+    fontWeight = "medium",
     startIcon,
     style,
     tooltip,
@@ -40,6 +44,8 @@ export const Tag = (props: TagProps) => {
         $border={border}
         $color={textColor}
         $elevated={elevated}
+        $fontSize={fontSize}
+        $fontWeight={fontWeight}
         className={className}
         style={style}
         {...tooltipHandlers}

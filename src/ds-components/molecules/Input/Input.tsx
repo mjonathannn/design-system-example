@@ -39,7 +39,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   return (
     <InputWrapper className={className} style={style}>
       {title && (
-        <Text as="label" htmlFor={inputId} size="sm" weight="medium">
+        <Text as="label" fontSize="sm" fontWeight="medium" htmlFor={inputId}>
           {title}
         </Text>
       )}
@@ -53,7 +53,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         pattern={numeric && !mask ? "[0-9]*" : undefined}
       />
       {helperText && (
-        <Text as="span" color="muted" size="xs">
+        <Text as="span" color="muted" fontSize="xs">
           {helperText}
         </Text>
       )}

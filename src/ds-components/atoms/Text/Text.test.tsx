@@ -75,8 +75,14 @@ describe("Text", () => {
     expect(screen.getByText("Both")).toHaveStyle({ fontWeight: typography.fontWeight.bold })
   })
 
+  it("applies an explicit fontWeight prop", () => {
+    render(<Text fontWeight="semibold">Weighted</Text>)
+
+    expect(screen.getByText("Weighted")).toHaveStyle({ fontWeight: typography.fontWeight.semibold })
+  })
+
   it("applies a display size above 4xl", () => {
-    render(<Text size="7xl">Display</Text>)
+    render(<Text fontSize="7xl">Display</Text>)
 
     expect(screen.getByText("Display")).toHaveStyle({
       fontSize: `${typography.fontSize["7xl"]}px`,

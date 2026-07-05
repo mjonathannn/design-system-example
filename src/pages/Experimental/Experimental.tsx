@@ -25,7 +25,7 @@ export const Experimental = () => {
 
   return (
     <ExperimentalWrapper>
-      <Text as="h1" size="2xl" weight="bold">
+      <Text as="h1" fontSize="2xl" fontWeight="bold">
         Página experimental
       </Text>
       <Text as="p" color="secondary">
