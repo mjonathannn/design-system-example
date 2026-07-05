@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
+import { spacing } from "../../../foundation"
 import { Icon } from "../Icon"
 import { Tag } from "./Tag"
 
@@ -78,38 +79,44 @@ export const WithEndIcon: Story = {
 // Every semantic color variant rendered side by side
 export const Colors: Story = {
   render: () => (
-    <>
-      <Tag color="default">default</Tag>
-      <Tag color="secondary">secondary</Tag>
-      <Tag color="muted">muted</Tag>
-      <Tag color="inverse">inverse</Tag>
+    <div style={{ display: "flex", gap: spacing[8] }}>
       <Tag color="brand">brand</Tag>
+      <Tag color="danger">danger</Tag>
+      <Tag color="default">default</Tag>
+      <Tag color="info">info</Tag>
+      <Tag color="inverse">inverse</Tag>
+      <Tag color="muted">muted</Tag>
+      <Tag color="secondary">secondary</Tag>
       <Tag color="success">success</Tag>
       <Tag color="warning">warning</Tag>
-      <Tag color="danger">danger</Tag>
-      <Tag color="info">info</Tag>
-    </>
+    </div>
   ),
 }
 
 // The outlined variant, a transparent background with a colored border and text, for every color
 export const Outlined: Story = {
   render: () => (
-    <>
+    <div style={{ display: "flex", gap: spacing[8] }}>
+      <Tag color="brand" variant="outlined">
+        brand
+      </Tag>
+      <Tag color="danger" variant="outlined">
+        danger
+      </Tag>
       <Tag color="default" variant="outlined">
         default
       </Tag>
-      <Tag color="secondary" variant="outlined">
-        secondary
-      </Tag>
-      <Tag color="muted" variant="outlined">
-        muted
+      <Tag color="info" variant="outlined">
+        info
       </Tag>
       <Tag color="inverse" variant="outlined">
         inverse
       </Tag>
-      <Tag color="brand" variant="outlined">
-        brand
+      <Tag color="muted" variant="outlined">
+        muted
+      </Tag>
+      <Tag color="secondary" variant="outlined">
+        secondary
       </Tag>
       <Tag color="success" variant="outlined">
         success
@@ -117,34 +124,34 @@ export const Outlined: Story = {
       <Tag color="warning" variant="outlined">
         warning
       </Tag>
-      <Tag color="danger" variant="outlined">
-        danger
-      </Tag>
-      <Tag color="info" variant="outlined">
-        info
-      </Tag>
-    </>
+    </div>
   ),
 }
 
 // The soft variant, a light tint background with a matching-color border and darker text, for every color
 export const Soft: Story = {
   render: () => (
-    <>
+    <div style={{ display: "flex", gap: spacing[8] }}>
+      <Tag color="brand" variant="soft">
+        brand
+      </Tag>
+      <Tag color="danger" variant="soft">
+        danger
+      </Tag>
       <Tag color="default" variant="soft">
         default
       </Tag>
-      <Tag color="secondary" variant="soft">
-        secondary
-      </Tag>
-      <Tag color="muted" variant="soft">
-        muted
+      <Tag color="info" variant="soft">
+        info
       </Tag>
       <Tag color="inverse" variant="soft">
         inverse
       </Tag>
-      <Tag color="brand" variant="soft">
-        brand
+      <Tag color="muted" variant="soft">
+        muted
+      </Tag>
+      <Tag color="secondary" variant="soft">
+        secondary
       </Tag>
       <Tag color="success" variant="soft">
         success
@@ -152,12 +159,6 @@ export const Soft: Story = {
       <Tag color="warning" variant="soft">
         warning
       </Tag>
-      <Tag color="danger" variant="soft">
-        danger
-      </Tag>
-      <Tag color="info" variant="soft">
-        info
-      </Tag>
-    </>
+    </div>
   ),
 }
