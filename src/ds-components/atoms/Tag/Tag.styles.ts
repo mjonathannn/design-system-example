@@ -79,13 +79,14 @@ export type StyledTagProps = {
   $color: string
   $fontSize: TagFontSize
   $fontWeight: TagFontWeight
+  $backdropFilter?: string
   $border?: string
   $elevated?: boolean
 }
 
 export const StyledTag = styled.span<StyledTagProps>`
   ${(props) => {
-    const { $background, $border, $color, $elevated, $fontSize, $fontWeight } = props
+    const { $backdropFilter, $background, $border, $color, $elevated, $fontSize, $fontWeight } = props
 
     return css`
       align-items: center;
@@ -101,6 +102,10 @@ export const StyledTag = styled.span<StyledTagProps>`
       justify-content: center;
       padding: ${spacing[4]} ${spacing[12]};
       white-space: nowrap;
+      ${$backdropFilter &&
+      css`
+        backdrop-filter: ${$backdropFilter};
+      `}
     `
   }}
 `

@@ -1,7 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
-import { colors, shadows, typography } from "@/foundation"
+import { colors, shadows, translucency, typography } from "@/foundation"
+import { hexToRgba } from "@/utils/colors"
 
 import { Tag } from "./Tag"
 
@@ -103,6 +104,44 @@ describe("Tag", () => {
     expect(screen.getByText("Novo")).toHaveStyle({
       fontSize: `${typography.fontSize.lg}px`,
       fontWeight: typography.fontWeight.bold,
+    })
+  })
+
+  it("applies a translucent background tinted with the color, defaulting to the medium level", () => {
+    render(
+      <Tag color="brand" translucent>
+        Novo
+      </Tag>,
+    )
+
+    expect(screen.getByText("Novo")).toHaveStyle({
+      backdropFilter: translucency.medium.backdropFilter,
+      backgroundColor: hexToRgba(colors.primary[500], 0.4),
+    })
+  })
+
+  it("applies an explicit translucent level", () => {
+    render(
+      <Tag color="danger" translucent="high">
+        Novo
+      </Tag>,
+    )
+
+    expect(screen.getByText("Novo")).toHaveStyle({
+      backdropFilter: translucency.high.backdropFilter,
+      backgroundColor: hexToRgba(colors.danger[500], 0.1),
+    })
+  })
+
+  it("translucent overrides the variant's own background", () => {
+    render(
+      <Tag color="success" translucent variant="outlined">
+        Novo
+      </Tag>,
+    )
+
+    expect(screen.getByText("Novo")).toHaveStyle({
+      backgroundColor: hexToRgba(colors.success[500], 0.4),
     })
   })
 

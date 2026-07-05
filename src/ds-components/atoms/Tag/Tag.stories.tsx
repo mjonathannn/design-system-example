@@ -37,6 +37,11 @@ const meta: Meta<typeof Tag> = {
       control: "text",
       description: "Text shown in a cursor-following tooltip on hover.",
     },
+    translucent: {
+      control: "select",
+      description: "Frosted-glass effect tinted with the tag's own color, overriding variant. true is medium.",
+      options: [false, true, "low", "medium", "high"],
+    },
     variant: {
       control: "select",
       options: ["solid", "outlined", "soft"],
@@ -91,6 +96,34 @@ export const WithEndIcon: Story = {
     children: "Ver mais",
     endIcon: <Icon color="inverse" name="chevron-right" size={16} />,
   },
+}
+
+// The translucent prop applying a frosted-glass effect tinted with each color, over a colored
+// background to show the effect - overrides variant entirely
+export const Translucent: Story = {
+  render: () => (
+    <div
+      style={{
+        background: "linear-gradient(135deg, #3D5778 0%, #4B87D6 100%)",
+        display: "flex",
+        gap: spacing[8],
+        padding: spacing[32],
+      }}
+    >
+      <Tag color="brand" translucent>
+        brand
+      </Tag>
+      <Tag color="danger" translucent>
+        danger
+      </Tag>
+      <Tag color="success" translucent>
+        success
+      </Tag>
+      <Tag color="inverse" translucent>
+        inverse
+      </Tag>
+    </div>
+  ),
 }
 
 // Every semantic color variant rendered side by side
