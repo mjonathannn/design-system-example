@@ -58,9 +58,9 @@ describe("Tag", () => {
     })
   })
 
-  it("applies a light tint background and a darker, matching-border color for the clear variant", () => {
+  it("applies a light tint background and a darker, matching-border color for the soft variant", () => {
     render(
-      <Tag color="success" variant="clear">
+      <Tag color="success" variant="soft">
         Novo
       </Tag>,
     )

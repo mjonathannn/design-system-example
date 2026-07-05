@@ -13,7 +13,7 @@ export type TagColor =
   | "success"
   | "warning"
 
-export type TagVariant = "clear" | "outlined" | "solid"
+export type TagVariant = "outlined" | "soft" | "solid"
 
 type TagColorConfig = {
   background: string
@@ -24,7 +24,18 @@ type TagColorConfig = {
 // inverse is the only solid color that needs a visible border - a white background would otherwise
 // blend into the page behind it, unlike every other color which is a solid, self-contained fill.
 export const tagColorMap: Record<TagVariant, Record<TagColor, TagColorConfig>> = {
-  clear: {
+  outlined: {
+    brand: { background: "transparent", border: `1px solid ${colors.primary[500]}`, color: colors.primary[500] },
+    danger: { background: "transparent", border: `1px solid ${colors.danger[500]}`, color: colors.danger[500] },
+    default: { background: "transparent", border: `1px solid ${colors.neutral[900]}`, color: colors.neutral[900] },
+    info: { background: "transparent", border: `1px solid ${colors.info[500]}`, color: colors.info[500] },
+    inverse: { background: "transparent", border: `1px solid ${colors.neutral[0]}`, color: colors.neutral[0] },
+    muted: { background: "transparent", border: `1px solid ${colors.neutral[500]}`, color: colors.neutral[500] },
+    secondary: { background: "transparent", border: `1px solid ${colors.neutral[600]}`, color: colors.neutral[600] },
+    success: { background: "transparent", border: `1px solid ${colors.success[500]}`, color: colors.success[500] },
+    warning: { background: "transparent", border: `1px solid ${colors.warning[500]}`, color: colors.warning[500] },
+  },
+  soft: {
     brand: { background: colors.primary[50], border: `1px solid ${colors.primary[50]}`, color: colors.primary[700] },
     danger: { background: colors.danger[50], border: `1px solid ${colors.danger[50]}`, color: colors.danger[700] },
     default: {
@@ -46,17 +57,6 @@ export const tagColorMap: Record<TagVariant, Record<TagColor, TagColorConfig>> =
     },
     success: { background: colors.success[50], border: `1px solid ${colors.success[50]}`, color: colors.success[700] },
     warning: { background: colors.warning[50], border: `1px solid ${colors.warning[50]}`, color: colors.warning[700] },
-  },
-  outlined: {
-    brand: { background: "transparent", border: `1px solid ${colors.primary[500]}`, color: colors.primary[500] },
-    danger: { background: "transparent", border: `1px solid ${colors.danger[500]}`, color: colors.danger[500] },
-    default: { background: "transparent", border: `1px solid ${colors.neutral[900]}`, color: colors.neutral[900] },
-    info: { background: "transparent", border: `1px solid ${colors.info[500]}`, color: colors.info[500] },
-    inverse: { background: "transparent", border: `1px solid ${colors.neutral[0]}`, color: colors.neutral[0] },
-    muted: { background: "transparent", border: `1px solid ${colors.neutral[500]}`, color: colors.neutral[500] },
-    secondary: { background: "transparent", border: `1px solid ${colors.neutral[600]}`, color: colors.neutral[600] },
-    success: { background: "transparent", border: `1px solid ${colors.success[500]}`, color: colors.success[500] },
-    warning: { background: "transparent", border: `1px solid ${colors.warning[500]}`, color: colors.warning[500] },
   },
   solid: {
     brand: { background: colors.primary[500], color: colors.neutral[0] },

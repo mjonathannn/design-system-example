@@ -13,7 +13,9 @@ export const Login = () => {
         <Grid.Row align="center" justify="center">
           <Grid.Col md={6} xs={12}>
             <Card translucent="high" elevated style={{ padding: spacing[40] }}>
-              <Tag color="success">success</Tag>
+              <Tag color="success" variant="soft">
+                success
+              </Tag>
 
               <Text as="p" color="inverse" size="7xl" bold>
                 Gestão escolar que parece simples, mas opera em 360º.

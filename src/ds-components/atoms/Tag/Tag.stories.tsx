@@ -30,7 +30,7 @@ const meta: Meta<typeof Tag> = {
     },
     variant: {
       control: "select",
-      options: ["solid", "outlined", "clear"],
+      options: ["solid", "outlined", "soft"],
     },
   },
   component: Tag,
@@ -127,35 +127,35 @@ export const Outlined: Story = {
   ),
 }
 
-// The clear variant, a light tint background with a matching-color border and darker text, for every color
-export const Clear: Story = {
+// The soft variant, a light tint background with a matching-color border and darker text, for every color
+export const Soft: Story = {
   render: () => (
     <>
-      <Tag color="default" variant="clear">
+      <Tag color="default" variant="soft">
         default
       </Tag>
-      <Tag color="secondary" variant="clear">
+      <Tag color="secondary" variant="soft">
         secondary
       </Tag>
-      <Tag color="muted" variant="clear">
+      <Tag color="muted" variant="soft">
         muted
       </Tag>
-      <Tag color="inverse" variant="clear">
+      <Tag color="inverse" variant="soft">
         inverse
       </Tag>
-      <Tag color="brand" variant="clear">
+      <Tag color="brand" variant="soft">
         brand
       </Tag>
-      <Tag color="success" variant="clear">
+      <Tag color="success" variant="soft">
         success
       </Tag>
-      <Tag color="warning" variant="clear">
+      <Tag color="warning" variant="soft">
         warning
       </Tag>
-      <Tag color="danger" variant="clear">
+      <Tag color="danger" variant="soft">
         danger
       </Tag>
-      <Tag color="info" variant="clear">
+      <Tag color="info" variant="soft">
         info
       </Tag>
     </>
