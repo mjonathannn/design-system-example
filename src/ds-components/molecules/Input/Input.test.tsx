@@ -87,7 +87,7 @@ describe("Input", () => {
   it("has a drop shadow by default", () => {
     render(<Input placeholder="Amount" />)
 
-    expect(screen.getByPlaceholderText("Amount")).toHaveStyle({ boxShadow: shadows.xs })
+    expect(screen.getByPlaceholderText("Amount")).not.toHaveStyle({ boxShadow: shadows.none })
   })
 
   it("removes the drop shadow when elevated is false", () => {

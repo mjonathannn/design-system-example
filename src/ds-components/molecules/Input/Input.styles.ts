@@ -20,7 +20,7 @@ export const StyledInput = styled.input<StyledInputProps>`
       background: ${colors.neutral[0]};
       border-radius: ${radius.lg};
       border: 1px solid ${colors.neutral[300]};
-      box-shadow: ${$elevated ? shadows.xs : shadows.none};
+      box-shadow: ${$elevated ? shadows.sm : shadows.none};
       color: ${colors.neutral[900]};
       font-family: ${typography.fontFamily.sans};
       font-size: ${typography.fontSize.sm}px;
