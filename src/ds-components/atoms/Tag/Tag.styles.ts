@@ -74,6 +74,9 @@ export const tagColorMap: Record<TagVariant, Record<TagColor, TagColorConfig>> =
   },
 }
 
+// A softer take on Card's own glass edge highlight, giving translucent tags a subtle inset rim.
+const glassEdgeGlow = "inset 0 1px 1px rgba(255, 255, 255, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.1)"
+
 export type StyledTagProps = {
   $background: string
   $color: string
@@ -88,13 +91,16 @@ export const StyledTag = styled.span<StyledTagProps>`
   ${(props) => {
     const { $backdropFilter, $background, $border, $color, $elevated, $fontSize, $fontWeight } = props
 
+    const boxShadowLayers = [$elevated && shadows.md, $backdropFilter && glassEdgeGlow].filter(Boolean)
+    const boxShadow = boxShadowLayers.length > 0 ? boxShadowLayers.join(", ") : shadows.none
+
     return css`
       align-items: center;
       align-self: flex-start;
       background: ${$background};
       border: ${$border ?? "1px solid transparent"};
       border-radius: ${radius.full};
-      box-shadow: ${$elevated ? shadows.md : shadows.none};
+      box-shadow: ${boxShadow};
       color: ${$color};
       display: inline-flex;
       font-size: ${typography.fontSize[$fontSize]}px;
