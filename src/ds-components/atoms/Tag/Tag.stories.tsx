@@ -29,6 +29,11 @@ const meta: Meta<typeof Tag> = {
       control: "select",
       options: ["regular", "medium", "semibold", "bold"],
     },
+    padding: {
+      control: "select",
+      description: "Padding around the tag's content. Defaults to sm, the smallest level.",
+      options: ["sm", "md", "lg"],
+    },
     startIcon: {
       control: false,
       description: "Icon element rendered before the tag's label.",
@@ -84,6 +89,17 @@ export const WithFontSizeAndFontWeight: Story = {
     fontSize: "lg",
     fontWeight: "bold",
   },
+}
+
+// Every padding level rendered side by side, from sm (the default, smallest) to lg
+export const Paddings: Story = {
+  render: () => (
+    <div style={{ alignItems: "center", display: "flex", gap: spacing[8] }}>
+      <Tag padding="sm">sm</Tag>
+      <Tag padding="md">md</Tag>
+      <Tag padding="lg">lg</Tag>
+    </div>
+  ),
 }
 
 // The textColor prop overriding the text color that color/variant would otherwise resolve to

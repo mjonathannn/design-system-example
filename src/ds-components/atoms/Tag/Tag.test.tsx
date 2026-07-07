@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
-import { colors, shadows, translucency, typography } from "@/foundation"
+import { colors, shadows, spacing, translucency, typography } from "@/foundation"
 import { hexToRgba } from "@/utils/colors"
 
 import { Tag } from "./Tag"
@@ -99,6 +99,18 @@ describe("Tag", () => {
     render(<Tag>Novo</Tag>)
 
     expect(screen.getByText("Novo")).toHaveStyle({ alignSelf: "flex-start" })
+  })
+
+  it("defaults to the sm padding", () => {
+    render(<Tag>Novo</Tag>)
+
+    expect(screen.getByText("Novo")).toHaveStyle({ padding: `${spacing[4]} ${spacing[12]}` })
+  })
+
+  it("applies the padding prop", () => {
+    render(<Tag padding="lg">Novo</Tag>)
+
+    expect(screen.getByText("Novo")).toHaveStyle({ padding: `${spacing[12]} ${spacing[20]}` })
   })
 
   it("defaults to a small font size and medium font weight", () => {

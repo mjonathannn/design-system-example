@@ -4,7 +4,7 @@ import { translucency } from "@/foundation"
 import { hexToRgba } from "@/utils/colors"
 
 import { useTooltip } from "../Tooltip"
-import type { TagColor, TagFontSize, TagFontWeight, TagVariant } from "./Tag.styles"
+import type { TagColor, TagFontSize, TagFontWeight, TagPadding, TagVariant } from "./Tag.styles"
 import { StyledTag, tagColorMap } from "./Tag.styles"
 
 type TranslucentLevel = "low" | "medium" | "high"
@@ -17,6 +17,7 @@ export type TagProps = {
   endIcon?: ReactNode
   fontSize?: TagFontSize
   fontWeight?: TagFontWeight
+  padding?: TagPadding
   startIcon?: ReactNode
   style?: CSSProperties
   textColor?: string
@@ -45,6 +46,7 @@ export const Tag = (props: TagProps) => {
     endIcon,
     fontSize = "sm",
     fontWeight = "medium",
+    padding = "sm",
     startIcon,
     style,
     textColor,
@@ -82,6 +84,7 @@ export const Tag = (props: TagProps) => {
         $elevated={elevated}
         $fontSize={fontSize}
         $fontWeight={fontWeight}
+        $padding={padding}
         className={className}
         style={style}
         {...tooltipHandlers}

@@ -17,6 +17,13 @@ export type TagVariant = "outlined" | "soft" | "solid"
 
 export type TagFontSize = keyof typeof typography.fontSize
 export type TagFontWeight = keyof typeof typography.fontWeight
+export type TagPadding = "sm" | "md" | "lg"
+
+const paddingMap: Record<TagPadding, string> = {
+  lg: `${spacing[12]} ${spacing[20]}`,
+  md: `${spacing[8]} ${spacing[16]}`,
+  sm: `${spacing[4]} ${spacing[12]}`,
+}
 
 type TagColorConfig = {
   background: string
@@ -82,6 +89,7 @@ export type StyledTagProps = {
   $color: string
   $fontSize: TagFontSize
   $fontWeight: TagFontWeight
+  $padding: TagPadding
   $backdropFilter?: string
   $border?: string
   $elevated?: boolean
@@ -89,7 +97,7 @@ export type StyledTagProps = {
 
 export const StyledTag = styled.span<StyledTagProps>`
   ${(props) => {
-    const { $backdropFilter, $background, $border, $color, $elevated, $fontSize, $fontWeight } = props
+    const { $backdropFilter, $background, $border, $color, $elevated, $fontSize, $fontWeight, $padding } = props
 
     const boxShadowLayers = [$elevated && shadows.md, $backdropFilter && glassEdgeGlow].filter(Boolean)
     const boxShadow = boxShadowLayers.length > 0 ? boxShadowLayers.join(", ") : shadows.none
@@ -107,7 +115,7 @@ export const StyledTag = styled.span<StyledTagProps>`
       font-weight: ${typography.fontWeight[$fontWeight]};
       gap: ${spacing[8]};
       justify-content: center;
-      padding: ${spacing[4]} ${spacing[12]};
+      padding: ${paddingMap[$padding]};
       white-space: nowrap;
       ${$backdropFilter &&
       css`
