@@ -39,6 +39,16 @@ describe("Tag", () => {
     expect(screen.getByText("Novo")).toHaveStyle({ border: `1px solid ${colors.neutral[200]}` })
   })
 
+  it("applies the textColor prop, overriding the color/variant default", () => {
+    render(
+      <Tag color="success" textColor="#8b4513" variant="soft">
+        Novo
+      </Tag>,
+    )
+
+    expect(screen.getByText("Novo")).toHaveStyle({ color: "#8b4513" })
+  })
+
   it("defaults to the solid variant", () => {
     render(<Tag color="brand">Novo</Tag>)
 

@@ -33,6 +33,10 @@ const meta: Meta<typeof Tag> = {
       control: false,
       description: "Icon element rendered before the tag's label.",
     },
+    textColor: {
+      control: "color",
+      description: "Overrides the text color that color/variant would otherwise resolve to.",
+    },
     tooltip: {
       control: "text",
       description: "Text shown in a cursor-following tooltip on hover.",
@@ -79,6 +83,16 @@ export const WithFontSizeAndFontWeight: Story = {
     children: "Destaque",
     fontSize: "lg",
     fontWeight: "bold",
+  },
+}
+
+// The textColor prop overriding the text color that color/variant would otherwise resolve to
+export const WithTextColor: Story = {
+  args: {
+    children: "Destaque",
+    color: "success",
+    textColor: "#8B4513",
+    variant: "soft",
   },
 }
 

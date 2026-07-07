@@ -19,6 +19,7 @@ export type TagProps = {
   fontWeight?: TagFontWeight
   startIcon?: ReactNode
   style?: CSSProperties
+  textColor?: string
   tooltip?: string
   translucent?: TranslucentLevel | boolean
   variant?: TagVariant
@@ -46,6 +47,7 @@ export const Tag = (props: TagProps) => {
     fontWeight = "medium",
     startIcon,
     style,
+    textColor,
     tooltip,
     translucent,
     variant = "solid",
@@ -60,7 +62,7 @@ export const Tag = (props: TagProps) => {
   const {
     background,
     border,
-    color: textColor,
+    color: defaultTextColor,
   } = translucentLevel
     ? {
         background: hexToRgba(solidConfig.background, translucentAlpha[translucentLevel]),
@@ -76,7 +78,7 @@ export const Tag = (props: TagProps) => {
         $backdropFilter={backdropFilter}
         $background={background}
         $border={border}
-        $color={textColor}
+        $color={textColor ?? defaultTextColor}
         $elevated={elevated}
         $fontSize={fontSize}
         $fontWeight={fontWeight}
