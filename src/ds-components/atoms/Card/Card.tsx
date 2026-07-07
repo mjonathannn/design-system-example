@@ -31,7 +31,7 @@ export const Card = (props: CardProps) => {
     : null
   const background = translucentConfig?.background ?? colors.neutral[0]
   const backdropFilter = translucentConfig?.backdropFilter
-  const boxShadowLayers = [elevated && shadows.lg, translucentConfig && glassEdgeGlow].filter(Boolean)
+  const boxShadowLayers = [elevated && shadows.md, translucentConfig && glassEdgeGlow].filter(Boolean)
   const boxShadow = boxShadowLayers.length > 0 ? boxShadowLayers.join(", ") : undefined
   const border = elevated || translucentConfig ? "none" : `1px solid ${colors.neutral[100]}`
 
