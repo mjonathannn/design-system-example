@@ -85,6 +85,12 @@ describe("Tag", () => {
     expect(screen.getByText("Novo")).toHaveStyle({ boxShadow: shadows.none })
   })
 
+  it("does not stretch to fill a flex container by default", () => {
+    render(<Tag>Novo</Tag>)
+
+    expect(screen.getByText("Novo")).toHaveStyle({ alignSelf: "flex-start" })
+  })
+
   it("defaults to a small font size and medium font weight", () => {
     render(<Tag>Novo</Tag>)
 

@@ -90,6 +90,7 @@ export const StyledTag = styled.span<StyledTagProps>`
 
     return css`
       align-items: center;
+      align-self: flex-start;
       background: ${$background};
       border: ${$border ?? "1px solid transparent"};
       border-radius: ${radius.full};
