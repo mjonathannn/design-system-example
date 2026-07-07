@@ -93,7 +93,7 @@ export const StyledTag = styled.span<StyledTagProps>`
       background: ${$background};
       border: ${$border ?? "1px solid transparent"};
       border-radius: ${radius.full};
-      box-shadow: ${$elevated ? shadows.xs : shadows.none};
+      box-shadow: ${$elevated ? shadows.md : shadows.none};
       color: ${$color};
       display: inline-flex;
       font-size: ${typography.fontSize[$fontSize]}px;
