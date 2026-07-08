@@ -1,7 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useForm } from "react-hook-form"
 
+import { borderRadiusLevels, type BorderRadiusLevelsType, spacing } from "@/foundation"
+
 import { Input } from "./Input"
+
+const borderRadiusLevelKeys = Object.keys(borderRadiusLevels) as (keyof BorderRadiusLevelsType)[]
 
 const ReactHookFormExample = () => {
   const { register } = useForm<{ email: string }>()
@@ -12,6 +16,11 @@ const ReactHookFormExample = () => {
 const meta: Meta<typeof Input> = {
   args: { placeholder: "Digite algo..." },
   argTypes: {
+    borderRadius: {
+      control: "select",
+      description: "Border radius level applied to the input: low, medium, high or full. Defaults to medium.",
+      options: borderRadiusLevelKeys,
+    },
     disabled: { control: "boolean", description: "Native disabled attribute, forwarded to the input element" },
     elevated: { control: "boolean", description: "Adds a drop shadow around the input. Defaults to true." },
     helperText: { control: "text", description: "Text rendered below the input to provide extra context" },
@@ -57,6 +66,17 @@ export const WithTitleAndHelperText: Story = {
 // The elevated prop set to false, removing the default drop shadow around the input
 export const Flat: Story = {
   args: { elevated: false, title: "E-mail" },
+}
+
+// Every border radius level available for the borderRadius prop
+export const BorderRadiuses: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: spacing[16] }}>
+      {borderRadiusLevelKeys.map((borderRadiusLevelKey) => (
+        <Input key={borderRadiusLevelKey} borderRadius={borderRadiusLevelKey} placeholder={borderRadiusLevelKey} />
+      ))}
+    </div>
+  ),
 }
 
 // The native disabled attribute, forwarded straight through to the input element

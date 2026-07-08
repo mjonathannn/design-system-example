@@ -11,6 +11,7 @@ const meta: Meta<typeof Tag> = {
   argTypes: {
     color: {
       control: "select",
+      description: "Semantic color applied to the tag, from the semantic color scale. Defaults to default.",
       options: ["default", "secondary", "muted", "inverse", "brand", "success", "warning", "danger", "info"],
     },
     elevated: {
@@ -23,10 +24,12 @@ const meta: Meta<typeof Tag> = {
     },
     fontSize: {
       control: "select",
+      description: "Font size token applied to the tag's label. Defaults to sm.",
       options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl"],
     },
     fontWeight: {
       control: "select",
+      description: "Font weight token applied to the tag's label. Defaults to medium.",
       options: ["regular", "medium", "semibold", "bold", "superbold"],
     },
     padding: {
@@ -53,6 +56,7 @@ const meta: Meta<typeof Tag> = {
     },
     variant: {
       control: "select",
+      description: "Visual style of the tag. Defaults to solid.",
       options: ["solid", "outlined", "soft"],
     },
   },

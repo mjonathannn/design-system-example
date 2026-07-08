@@ -1,6 +1,13 @@
 import type { CSSProperties } from "react"
 
-import { radius, shadows, spacing } from "@/foundation"
+import {
+  borderRadiusLevels,
+  type BorderRadiusLevelsType,
+  shadows,
+  type ShadowsType,
+  spacing,
+  type SpacingType,
+} from "@/foundation"
 
 import { useTooltip } from "../Tooltip"
 import { StyledImage } from "./Image.styles"
@@ -8,23 +15,23 @@ import { StyledImage } from "./Image.styles"
 export type ImageProps = {
   alt: string
   src: string
-  borderRadius?: keyof typeof radius
-  boxShadow?: keyof typeof shadows
+  borderRadius?: keyof BorderRadiusLevelsType
+  boxShadow?: keyof ShadowsType
   className?: string
-  size?: keyof typeof spacing
+  size?: keyof SpacingType
   style?: CSSProperties
   tooltip?: string
 }
 
 export const Image = (props: ImageProps) => {
-  const { alt, borderRadius = "xl", boxShadow = "xl", className, size = 48, src, style, tooltip } = props
+  const { alt, borderRadius = "medium", boxShadow = "xl", className, size = 48, src, style, tooltip } = props
 
   const { tooltipElement, tooltipHandlers } = useTooltip(tooltip)
 
   return (
     <>
       <StyledImage
-        $borderRadius={radius[borderRadius]}
+        $borderRadius={borderRadiusLevels[borderRadius]}
         $boxShadow={shadows[boxShadow]}
         $size={spacing[size]}
         alt={alt}

@@ -1,24 +1,12 @@
 import type { ComponentPropsWithoutRef, CSSProperties, ElementType, ReactNode } from "react"
 
-import { colors } from "@/foundation"
+import { semanticColors, type SemanticColorsType } from "@/foundation"
 
 import { useTooltip } from "../Tooltip"
 import type { TextAlign, TextFontSize, TextFontWeight, TextTransform } from "./Text.styles"
 import { StyledText } from "./Text.styles"
 
-type TextColor = "brand" | "danger" | "default" | "info" | "inverse" | "muted" | "secondary" | "success" | "warning"
-
-const colorMap: Record<TextColor, string> = {
-  brand: colors.primary[500],
-  danger: colors.danger[500],
-  default: colors.neutral[900],
-  info: colors.info[500],
-  inverse: colors.neutral[0],
-  muted: colors.neutral[500],
-  secondary: colors.neutral[700],
-  success: colors.success[500],
-  warning: colors.warning[500],
-}
+type TextColor = keyof SemanticColorsType
 
 type TextOwnProps<C extends ElementType> = {
   children: ReactNode
@@ -77,7 +65,7 @@ export const Text = <C extends ElementType = "p">(props: TextProps<C>) => {
     <>
       <StyledText
         $align={align}
-        $color={colorMap[color]}
+        $color={semanticColors[color]}
         $fontSize={fontSize}
         $fontWeight={resolvedFontWeight}
         $textTransform={textTransform}

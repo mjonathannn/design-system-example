@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react"
 
-import { colors, spacing } from "@/foundation"
+import { colors, spacing, type SpacingType } from "@/foundation"
 
 import { useTooltip } from "../Tooltip"
 import { StyledIconWrapper } from "./Icon.styles"
@@ -25,7 +25,7 @@ export type IconProps = {
   name: IconName
   className?: string
   color?: IconColor
-  size?: keyof typeof spacing
+  size?: keyof SpacingType
   style?: CSSProperties
   tooltip?: string
 }

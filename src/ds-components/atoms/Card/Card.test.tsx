@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
-import { colors, radius, spacing } from "@/foundation"
+import { borderRadiusLevels, colors, semanticColors, spacing } from "@/foundation"
 
 import { Card } from "./Card"
 
@@ -14,16 +14,34 @@ describe("Card", () => {
     expect(element.tagName).toBe("DIV")
   })
 
-  it("defaults to the xl border radius", () => {
+  it("defaults to the medium border radius", () => {
     render(<Card>Content</Card>)
 
-    expect(screen.getByText("Content")).toHaveStyle({ borderRadius: radius.xl })
+    expect(screen.getByText("Content")).toHaveStyle({ borderRadius: borderRadiusLevels.medium })
   })
 
   it("applies the borderRadius prop", () => {
+    render(<Card borderRadius="high">Content</Card>)
+
+    expect(screen.getByText("Content")).toHaveStyle({ borderRadius: borderRadiusLevels.high })
+  })
+
+  it("applies the full borderRadius level", () => {
     render(<Card borderRadius="full">Content</Card>)
 
-    expect(screen.getByText("Content")).toHaveStyle({ borderRadius: radius.full })
+    expect(screen.getByText("Content")).toHaveStyle({ borderRadius: borderRadiusLevels.full })
+  })
+
+  it("defaults to the inverse background color", () => {
+    render(<Card>Content</Card>)
+
+    expect(screen.getByText("Content")).toHaveStyle({ backgroundColor: semanticColors.inverse })
+  })
+
+  it("applies the color prop", () => {
+    render(<Card color="brand">Content</Card>)
+
+    expect(screen.getByText("Content")).toHaveStyle({ backgroundColor: semanticColors.brand })
   })
 
   it("applies the className passed as a prop", () => {

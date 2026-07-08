@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { Link, MemoryRouter } from "react-router-dom"
 import { describe, expect, it, vi } from "vitest"
 
-import { colors, typography } from "@/foundation"
+import { colors, semanticColors, typography } from "@/foundation"
 
 import { Button } from "./Button"
 
@@ -31,6 +31,42 @@ describe("Button", () => {
     render(<Button>Click me</Button>)
 
     expect(screen.getByRole("button")).toHaveStyle({ backgroundColor: colors.primary[500] })
+  })
+
+  it("defaults to the brand color", () => {
+    render(<Button>Click me</Button>)
+
+    expect(screen.getByRole("button")).toHaveStyle({ backgroundColor: semanticColors.brand })
+  })
+
+  it("applies the color prop to the filled variant", () => {
+    render(<Button color="danger">Click me</Button>)
+
+    expect(screen.getByRole("button")).toHaveStyle({ backgroundColor: semanticColors.danger })
+  })
+
+  it("applies the color prop to the outlined variant's label and border", () => {
+    render(
+      <Button color="danger" variant="outlined">
+        Click me
+      </Button>,
+    )
+
+    expect(screen.getByRole("button")).toHaveStyle({
+      backgroundColor: colors.neutral[0],
+      borderColor: semanticColors.danger,
+      color: semanticColors.danger,
+    })
+  })
+
+  it("applies the color prop to the link variant's label", () => {
+    render(
+      <Button color="danger" variant="link">
+        Click me
+      </Button>,
+    )
+
+    expect(screen.getByRole("button")).toHaveStyle({ background: "transparent", color: semanticColors.danger })
   })
 
   it("applies the outlined variant styles", () => {

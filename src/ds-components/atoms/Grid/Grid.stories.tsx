@@ -13,7 +13,12 @@ const demoBoxStyle = {
 }
 
 const meta: Meta<typeof Grid.Container> = {
-  argTypes: { fluid: { control: "boolean" } },
+  argTypes: {
+    fluid: {
+      control: "boolean",
+      description: "Spans 100% of the available width instead of capping at a max-width per breakpoint.",
+    },
+  },
   component: Grid.Container,
   tags: ["autodocs"],
   title: "Atoms/Grid",

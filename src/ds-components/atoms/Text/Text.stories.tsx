@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
+import { semanticColors, type SemanticColorsType } from "@/foundation"
+
 import { Text } from "./Text"
+
+const colorKeys = Object.keys(semanticColors) as (keyof SemanticColorsType)[]
 
 const meta: Meta<typeof Text> = {
   args: {
@@ -9,6 +13,7 @@ const meta: Meta<typeof Text> = {
   argTypes: {
     align: {
       control: "select",
+      description: "Text alignment applied to the element.",
       options: ["left", "center", "right", "justify"],
     },
     bold: {
@@ -22,10 +27,12 @@ const meta: Meta<typeof Text> = {
     },
     color: {
       control: "select",
-      options: ["default", "secondary", "muted", "inverse", "brand", "success", "warning", "danger", "info"],
+      description: "Semantic color applied to the text, from the semantic color scale. Defaults to default.",
+      options: colorKeys,
     },
     fontSize: {
       control: "select",
+      description: "Font size token applied to the text. Defaults to md.",
       options: ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl", "7xl"],
     },
     fontWeight: {

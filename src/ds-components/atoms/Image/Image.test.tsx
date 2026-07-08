@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
-import { radius, shadows, spacing } from "@/foundation"
+import { borderRadiusLevels, shadows, spacing } from "@/foundation"
 
 import { Image } from "./Image"
 
@@ -44,16 +44,22 @@ describe("Image", () => {
     expect(screen.getByRole("img", { name: "Foto de perfil" })).toHaveStyle({ boxShadow: shadows.none })
   })
 
-  it("defaults to the xl border radius", () => {
+  it("defaults to the medium border radius", () => {
     render(<Image alt="Foto de perfil" src="/avatar.png" />)
 
-    expect(screen.getByRole("img", { name: "Foto de perfil" })).toHaveStyle({ borderRadius: radius.xl })
+    expect(screen.getByRole("img", { name: "Foto de perfil" })).toHaveStyle({ borderRadius: borderRadiusLevels.medium })
   })
 
   it("applies the borderRadius prop", () => {
+    render(<Image alt="Foto de perfil" borderRadius="high" src="/avatar.png" />)
+
+    expect(screen.getByRole("img", { name: "Foto de perfil" })).toHaveStyle({ borderRadius: borderRadiusLevels.high })
+  })
+
+  it("applies the full borderRadius level", () => {
     render(<Image alt="Foto de perfil" borderRadius="full" src="/avatar.png" />)
 
-    expect(screen.getByRole("img", { name: "Foto de perfil" })).toHaveStyle({ borderRadius: radius.full })
+    expect(screen.getByRole("img", { name: "Foto de perfil" })).toHaveStyle({ borderRadius: borderRadiusLevels.full })
   })
 
   it("does not stretch to fill a flex container by default", () => {

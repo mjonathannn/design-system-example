@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components"
 
-import { colors, radius, shadows, spacing, typography } from "@/foundation"
+import { colors, shadows, spacing, typography } from "@/foundation"
 
 export const InputWrapper = styled.div`
   display: flex;
@@ -9,22 +9,23 @@ export const InputWrapper = styled.div`
 `
 
 export type StyledInputProps = {
+  $borderRadius: string
   $elevated?: boolean
 }
 
 export const StyledInput = styled.input<StyledInputProps>`
   ${(props) => {
-    const { $elevated } = props
+    const { $borderRadius, $elevated } = props
 
     return css`
       background: ${colors.neutral[0]};
-      border-radius: ${radius.lg};
+      border-radius: ${$borderRadius};
       border: 1px solid ${colors.neutral[300]};
       box-shadow: ${$elevated ? shadows.sm : shadows.none};
       color: ${colors.neutral[900]};
       font-family: ${typography.fontFamily.sans};
-      font-size: ${typography.fontSize.sm}px;
-      padding: ${spacing[8]} ${spacing[12]};
+      font-size: ${typography.fontSize.md}px;
+      padding: ${spacing[12]};
       width: 100%;
 
       &::placeholder {

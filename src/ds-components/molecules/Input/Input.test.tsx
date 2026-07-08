@@ -3,7 +3,7 @@ import { createRef } from "react"
 import { useForm } from "react-hook-form"
 import { describe, expect, it, vi } from "vitest"
 
-import { radius, shadows, spacing, typography } from "@/foundation"
+import { borderRadiusLevels, shadows, spacing, typography } from "@/foundation"
 
 import { Input } from "./Input"
 
@@ -76,12 +76,28 @@ describe("Input", () => {
     expect(handleChange).toHaveBeenCalled()
   })
 
-  it("uses a large border radius and small font size", () => {
+  it("uses a medium font size", () => {
     render(<Input placeholder="Amount" />)
 
     const input = screen.getByPlaceholderText("Amount")
 
-    expect(input).toHaveStyle({ borderRadius: radius.lg, fontSize: `${typography.fontSize.sm}px` })
+    expect(input).toHaveStyle({ fontSize: `${typography.fontSize.md}px` })
+  })
+
+  it("defaults to the medium border radius", () => {
+    render(<Input placeholder="Amount" />)
+
+    const input = screen.getByPlaceholderText("Amount")
+
+    expect(input).toHaveStyle({ borderRadius: borderRadiusLevels.medium })
+  })
+
+  it("applies the borderRadius prop", () => {
+    render(<Input borderRadius="high" placeholder="Amount" />)
+
+    const input = screen.getByPlaceholderText("Amount")
+
+    expect(input).toHaveStyle({ borderRadius: borderRadiusLevels.high })
   })
 
   it("has a drop shadow by default", () => {

@@ -1,13 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import schoolFlowIcon from "@/assets/images/school-flow.svg"
-import { radius, shadows, spacing } from "@/foundation"
+import {
+  borderRadiusLevels,
+  type BorderRadiusLevelsType,
+  shadows,
+  type ShadowsType,
+  spacing,
+  type SpacingType,
+} from "@/foundation"
 
 import { Image } from "./Image"
 
-const spacingKeys = Object.keys(spacing).map(Number) as (keyof typeof spacing)[]
-const shadowKeys = Object.keys(shadows) as (keyof typeof shadows)[]
-const radiusKeys = Object.keys(radius) as (keyof typeof radius)[]
+const spacingKeys = Object.keys(spacing).map(Number) as (keyof SpacingType)[]
+const shadowKeys = Object.keys(shadows) as (keyof ShadowsType)[]
+const borderRadiusLevelKeys = Object.keys(borderRadiusLevels) as (keyof BorderRadiusLevelsType)[]
 
 const meta: Meta<typeof Image> = {
   args: {
@@ -17,8 +24,8 @@ const meta: Meta<typeof Image> = {
   argTypes: {
     borderRadius: {
       control: "select",
-      description: "Border radius token applied to the image, from the radius token scale. Defaults to xl.",
-      options: radiusKeys,
+      description: "Border radius level applied to the image: low, medium, high or full. Defaults to medium.",
+      options: borderRadiusLevelKeys,
     },
     boxShadow: {
       control: "select",
@@ -44,7 +51,7 @@ export default meta
 
 type Story = StoryObj<typeof Image>
 
-// Default rendering, using the default 48px size, xl box shadow and xl border radius
+// Default rendering, using the default 48px size, xl box shadow and medium border radius
 export const Default: Story = {}
 
 // Every spacing-token-derived size available for the size prop
@@ -70,12 +77,17 @@ export const BoxShadows: Story = {
   ),
 }
 
-// Every radius token available for the borderRadius prop
+// Every border radius level available for the borderRadius prop
 export const BorderRadiuses: Story = {
   render: () => (
     <div style={{ alignItems: "center", display: "flex", gap: spacing[24] }}>
-      {radiusKeys.map((radiusKey) => (
-        <Image key={radiusKey} alt="Ícone do SchoolFlow360" borderRadius={radiusKey} src={schoolFlowIcon} />
+      {borderRadiusLevelKeys.map((borderRadiusLevelKey) => (
+        <Image
+          key={borderRadiusLevelKey}
+          alt="Ícone do SchoolFlow360"
+          borderRadius={borderRadiusLevelKey}
+          src={schoolFlowIcon}
+        />
       ))}
     </div>
   ),

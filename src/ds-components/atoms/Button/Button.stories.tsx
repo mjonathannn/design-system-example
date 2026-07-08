@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Link, MemoryRouter } from "react-router-dom"
 
-import { spacing } from "../../../foundation"
+import { semanticColors, type SemanticColorsType, spacing } from "../../../foundation"
 import { Icon } from "../Icon"
 import { Button } from "./Button"
+
+const colorKeys = Object.keys(semanticColors) as (keyof SemanticColorsType)[]
 
 const meta: Meta<typeof Button> = {
   args: {
@@ -13,6 +15,12 @@ const meta: Meta<typeof Button> = {
     as: {
       control: false,
       description: "Element or component the button renders as, e.g. a router Link. Defaults to a native button.",
+    },
+    color: {
+      control: "select",
+      description:
+        "Color applied to the button, from the semantic color scale: the background on filled, the label and border on outlined and link. Defaults to brand.",
+      options: colorKeys,
     },
     disabled: {
       control: "boolean",
@@ -160,6 +168,45 @@ export const Sizes: Story = {
       <Button size="small">Small</Button>
       <Button size="medium">Medium</Button>
       <Button size="large">Large</Button>
+    </div>
+  ),
+}
+
+// The color prop applied to the filled variant's background, for every semantic color token
+export const Colors: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: spacing[8] }}>
+      {colorKeys.map((colorKey) => (
+        <Button key={colorKey} color={colorKey}>
+          {colorKey}
+        </Button>
+      ))}
+    </div>
+  ),
+}
+
+// The color prop applied to the outlined variant's label and border, for every semantic color token
+export const ColorsOutlined: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: spacing[8] }}>
+      {colorKeys.map((colorKey) => (
+        <Button key={colorKey} color={colorKey} variant="outlined">
+          {colorKey}
+        </Button>
+      ))}
+    </div>
+  ),
+}
+
+// The color prop applied to the link variant's label, for every semantic color token
+export const ColorsLink: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: spacing[8] }}>
+      {colorKeys.map((colorKey) => (
+        <Button key={colorKey} color={colorKey} variant="link">
+          {colorKey}
+        </Button>
+      ))}
     </div>
   ),
 }

@@ -1,5 +1,7 @@
 import type { ButtonHTMLAttributes, ComponentPropsWithoutRef, CSSProperties, ElementType, ReactNode } from "react"
 
+import { semanticColors, type SemanticColorsType } from "@/foundation"
+
 import { useTooltip } from "../Tooltip"
 import type { ButtonSize, ButtonVariant } from "./Button.styles"
 import { StyledButton } from "./Button.styles"
@@ -8,6 +10,7 @@ type ButtonOwnProps<C extends ElementType> = {
   children: ReactNode
   as?: C
   className?: string
+  color?: keyof SemanticColorsType
   endIcon?: ReactNode
   size?: ButtonSize
   startIcon?: ReactNode
@@ -24,6 +27,7 @@ export const Button = <C extends ElementType = "button">(props: ButtonProps<C>) 
     as,
     children,
     className,
+    color = "brand",
     endIcon,
     size = "medium",
     startIcon,
@@ -43,6 +47,7 @@ export const Button = <C extends ElementType = "button">(props: ButtonProps<C>) 
   return (
     <>
       <StyledButton
+        $color={semanticColors[color]}
         $size={size}
         $variant={variant}
         as={as}

@@ -1,23 +1,32 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import { spacing, typography } from "@/foundation"
+import { spacing, type SpacingType, typography } from "@/foundation"
 
 import { Icon } from "./Icon"
 import type { IconName } from "./iconMap"
 import { iconMap } from "./iconMap"
 
 const allIconNames = Object.keys(iconMap) as IconName[]
-const spacingKeys = Object.keys(spacing).map(Number) as (keyof typeof spacing)[]
+const spacingKeys = Object.keys(spacing).map(Number) as (keyof SpacingType)[]
 
 const meta: Meta<typeof Icon> = {
   args: { name: "home" },
   argTypes: {
     color: {
       control: "select",
+      description: "Semantic color applied to the icon. Defaults to default.",
       options: ["brand", "danger", "default", "info", "inverse", "muted", "secondary", "success", "warning"],
     },
-    name: { control: "select", options: allIconNames },
-    size: { control: "select", options: spacingKeys },
+    name: {
+      control: "select",
+      description: "Icon to render, from the icon set registered in iconMap.",
+      options: allIconNames,
+    },
+    size: {
+      control: "select",
+      description: "Size (width and height) applied to the icon, from the spacing token scale. Defaults to 20.",
+      options: spacingKeys,
+    },
   },
   component: Icon,
   tags: ["autodocs"],
