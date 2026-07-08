@@ -7,6 +7,7 @@ export const typography = {
     medium: 500,
     semibold: 600,
     bold: 700,
+    superbold: 900,
   },
   fontSize: {
     xs: 12,
