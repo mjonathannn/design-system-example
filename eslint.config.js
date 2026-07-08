@@ -35,12 +35,13 @@ export default defineConfig([
       },
     },
     rules: {
+      "@typescript-eslint/no-unused-vars": "warn",
+      "func-style": ["error", "expression", { allowArrowFunctions: true }],
+      "prefer-arrow-callback": "error",
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": "error",
-      "func-style": ["error", "expression", { allowArrowFunctions: true }],
-      "prefer-arrow-callback": "error",
     },
   },
   {
