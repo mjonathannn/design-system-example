@@ -1,11 +1,22 @@
 import schoolFlowIcon from "@/assets/images/school-flow-icon.svg"
-import { Card, Grid, Icon, Image, Tag, Text } from "@/ds-components/atoms"
+import { Card, Grid, Icon, type IconProps, Image, Tag, type TagProps, Text } from "@/ds-components/atoms"
 
-import { colors, radius, spacing } from "../../foundation"
+import { colors, spacing } from "../../foundation"
 import { LoginWrapper } from "./Login.styles"
 
-const loremIpsum =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+const commonTagProps: Omit<TagProps, "children"> = {
+  color: "muted",
+  fontWeight: "semibold",
+  padding: "md",
+  textColor: colors.neutral[0],
+  translucent: "high",
+  variant: "soft",
+}
+
+const commonTagStartIconProps: Omit<IconProps, "name"> = {
+  color: "inverse",
+  size: 16,
+}
 
 export const Login = () => {
   return (
@@ -14,10 +25,10 @@ export const Login = () => {
         <Grid.Row align="center" justify="center">
           <Grid.Col xs={12} md={6}>
             <Card
+              borderRadius="5xl"
               translucent="high"
               elevated
               style={{
-                borderRadius: radius["5xl"],
                 display: "flex",
                 flexDirection: "column",
                 gap: spacing[20],
@@ -25,7 +36,7 @@ export const Login = () => {
               }}
             >
               <div style={{ alignItems: "center", display: "flex", gap: spacing[12] }}>
-                <Image alt="Ícone do SchoolFlow360" src={schoolFlowIcon} size={64} borderRadius="2xl" />
+                <Image alt="Ícone do SchoolFlow360" borderRadius="2xl" size={64} src={schoolFlowIcon} />
 
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <Text as="p" color="inverse" fontSize="lg" bold>
@@ -41,11 +52,11 @@ export const Login = () => {
               <Tag
                 color="success"
                 fontSize="xs"
-                fontWeight="bold"
+                fontWeight="superbold"
                 variant="soft"
                 style={{ textTransform: "uppercase" }}
               >
-                SaaS white label multi-tenant
+                SaaS White Label Multi-Tenant
               </Tag>
 
               <Text as="p" color="inverse" fontSize="7xl" bold>
@@ -58,58 +69,23 @@ export const Login = () => {
               </Text>
 
               <div style={{ display: "flex", flexWrap: "wrap", gap: spacing[8] }}>
-                <Tag
-                  color="muted"
-                  variant="soft"
-                  translucent="high"
-                  textColor={colors.neutral[0]}
-                  padding="md"
-                  startIcon={<Icon color="inverse" name="dashboard-outline" size={16} />}
-                >
+                <Tag {...commonTagProps} startIcon={<Icon {...commonTagStartIconProps} name="dashboard-outline" />}>
                   Dashboard 360º
                 </Tag>
 
-                <Tag
-                  color="muted"
-                  variant="soft"
-                  translucent="high"
-                  textColor={colors.neutral[0]}
-                  padding="md"
-                  startIcon={<Icon color="inverse" name="label-outline" size={16} />}
-                >
+                <Tag {...commonTagProps} startIcon={<Icon {...commonTagStartIconProps} name="label-outline" />}>
                   White Label
                 </Tag>
 
-                <Tag
-                  color="muted"
-                  variant="soft"
-                  translucent="high"
-                  textColor={colors.neutral[0]}
-                  padding="md"
-                  startIcon={<Icon color="inverse" name="users-outline" size={16} />}
-                >
+                <Tag {...commonTagProps} startIcon={<Icon {...commonTagStartIconProps} name="users-outline" />}>
                   Alunos
                 </Tag>
 
-                <Tag
-                  color="muted"
-                  variant="soft"
-                  translucent="high"
-                  textColor={colors.neutral[0]}
-                  padding="md"
-                  startIcon={<Icon color="inverse" name="money-outline" size={16} />}
-                >
+                <Tag {...commonTagProps} startIcon={<Icon {...commonTagStartIconProps} name="money-outline" />}>
                   Financeiro
                 </Tag>
 
-                <Tag
-                  color="muted"
-                  variant="soft"
-                  translucent="high"
-                  textColor={colors.neutral[0]}
-                  padding="md"
-                  startIcon={<Icon color="inverse" name="star-outline" size={16} />}
-                >
+                <Tag {...commonTagProps} startIcon={<Icon {...commonTagStartIconProps} name="star-outline" />}>
                   IA
                 </Tag>
               </div>
@@ -117,8 +93,14 @@ export const Login = () => {
           </Grid.Col>
 
           <Grid.Col xs={12} md={6}>
-            <Card elevated>
-              <Text as="p">{loremIpsum}</Text>
+            <Card borderRadius="5xl" elevated style={{ padding: spacing[40] }}>
+              <Text as="p">Entrada Segura</Text>
+
+              <Text as="p">Acesse sua jornada SchoolFlow360º</Text>
+
+              <Text as="p">
+                Digite seu e-mail e senha, escolha seu perfil e acesse uma experiência preparada para a sua rotina.
+              </Text>
             </Card>
           </Grid.Col>
         </Grid.Row>
