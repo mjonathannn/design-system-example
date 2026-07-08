@@ -31,6 +31,26 @@ This is a React 19 + TypeScript + Vite app, built from scratch on top of a custo
 
 `src/pages/<PageName>/` follows the same per-component folder shape as `src/ds-components/` (`PageName.tsx` + `PageName.styles.ts` + `index.ts`, each layer folder's `index.ts` re-exporting every page — see `src/pages/index.ts`), but pages are **not** part of the Atomic Design component layers below and don't get `.stories.tsx`/`.test.tsx`: they're routed compositions of atoms/molecules/organisms, not reusable design-system pieces documented in Storybook or unit-tested in isolation.
 
+**JSX props on a component, within a page, follow a specific order** — not the plain alphabetical order `perfectionist` enforces for `src/ds-components/`/`src/components/` object literals (see the ESLint/Prettier conventions section below), since JSX attributes aren't covered by that rule at all. Order them: non-boolean, non-`style` props alphabetically first; then boolean shorthand props, also alphabetically among themselves; then `style` last, always. Within the `style` object itself, keys are alphabetical regardless of what kind of CSS property they are. Not lint-enforced — review manually. Example, the first `Card` in `Login.tsx`:
+
+```tsx
+<Card
+  borderRadius="5xl"
+  translucent="high"
+  elevated
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    gap: spacing[20],
+    padding: spacing[40],
+  }}
+>
+```
+
+`borderRadius`/`translucent` (alphabetical, non-boolean, non-style) come first, `elevated` (the lone boolean) comes next, and `style` comes last with its own keys (`display`/`flexDirection`/`gap`/`padding`) alphabetical.
+
+One exception: `Grid.Col`'s breakpoint props (`xs`/`sm`/`md`/`lg`/`xl`/`xxl`) are ordered smallest to largest, not alphabetically — e.g. `<Grid.Col xs={12} md={6}>`, not `<Grid.Col md={6} xs={12}>`.
+
 ### `src/utils/` holds cross-cutting pure functions
 
 `src/utils/<moduleName>/` is for plain, framework-agnostic functions reused across multiple components/pages — not tied to any single component's folder. Each module gets its own folder mirroring the component-folder shape (`<moduleName>.ts` + `index.ts` re-exporting it, e.g. `export * from "./formats"`) and a co-located `<moduleName>.test.ts` (see `src/utils/formats/`). The top-level `src/utils/index.ts` re-exports every module folder in turn, so consumers can import from `@/utils` directly. Modules are named exports only, no default export. `formats/formats.ts` is the single source of truth for display formatting (`formatCpf`, `formatCnpj`, `formatCep`, `formatPhone`, `formatCreditCard`, `formatCurrency`, `formatExpiry`) — each takes a raw/possibly-dirty `string` and returns the formatted display string, doing its own digit-extraction and, where the format has a fixed length, truncation internally. `Input`'s `mask` prop (`src/ds-components/molecules/Input/Input.masks.ts`) is a thin dispatcher over these same functions rather than its own implementation — don't duplicate a formatter's logic in a component when the value could instead be formatted for display via `@/utils/formats` from anywhere in the app. `loadingStore/loadingStore.ts` is another such module — see the `src/services/httpClient/` section below for what it's for.
