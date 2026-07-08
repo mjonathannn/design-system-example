@@ -75,6 +75,22 @@ describe("Text", () => {
     expect(screen.getByText("Both")).toHaveStyle({ fontWeight: typography.fontWeight.bold })
   })
 
+  it("applies superbold font weight when the superbold prop is set", () => {
+    render(<Text superbold>Superbold</Text>)
+
+    expect(screen.getByText("Superbold")).toHaveStyle({ fontWeight: typography.fontWeight.superbold })
+  })
+
+  it("superbold takes precedence over bold and semibold when all three are set", () => {
+    render(
+      <Text bold semibold superbold>
+        All three
+      </Text>,
+    )
+
+    expect(screen.getByText("All three")).toHaveStyle({ fontWeight: typography.fontWeight.superbold })
+  })
+
   it("applies an explicit fontWeight prop", () => {
     render(<Text fontWeight="semibold">Weighted</Text>)
 

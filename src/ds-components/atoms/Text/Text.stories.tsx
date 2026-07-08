@@ -13,7 +13,8 @@ const meta: Meta<typeof Text> = {
     },
     bold: {
       control: "boolean",
-      description: 'Shorthand for fontWeight="bold". Takes precedence over semibold and fontWeight.',
+      description:
+        'Shorthand for fontWeight="bold". Takes precedence over semibold and fontWeight; overridden by superbold.',
     },
     capitalize: {
       control: "boolean",
@@ -29,8 +30,8 @@ const meta: Meta<typeof Text> = {
     },
     fontWeight: {
       control: "select",
-      description: "Explicit font weight. Ignored when bold or semibold is set.",
-      options: ["regular", "medium", "semibold", "bold"],
+      description: "Explicit font weight. Ignored when bold, semibold, or superbold is set.",
+      options: ["regular", "medium", "semibold", "bold", "superbold"],
     },
     lowercase: {
       control: "boolean",
@@ -38,7 +39,12 @@ const meta: Meta<typeof Text> = {
     },
     semibold: {
       control: "boolean",
-      description: 'Shorthand for fontWeight="semibold". Takes precedence over fontWeight; overridden by bold.',
+      description:
+        'Shorthand for fontWeight="semibold". Takes precedence over fontWeight; overridden by bold and superbold.',
+    },
+    superbold: {
+      control: "boolean",
+      description: 'Shorthand for fontWeight="superbold". Takes precedence over bold, semibold, and fontWeight.',
     },
     uppercase: {
       control: "boolean",
@@ -79,6 +85,14 @@ export const Semibold: Story = {
   args: {
     children: "Texto semibold via a prop semibold",
     semibold: true,
+  },
+}
+
+// The superbold convenience prop, a shorthand for fontWeight="superbold"
+export const Superbold: Story = {
+  args: {
+    children: "Texto superbold via a prop superbold",
+    superbold: true,
   },
 }
 

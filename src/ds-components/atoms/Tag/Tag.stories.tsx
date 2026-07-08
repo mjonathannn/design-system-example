@@ -27,7 +27,7 @@ const meta: Meta<typeof Tag> = {
     },
     fontWeight: {
       control: "select",
-      options: ["regular", "medium", "semibold", "bold"],
+      options: ["regular", "medium", "semibold", "bold", "superbold"],
     },
     padding: {
       control: "select",

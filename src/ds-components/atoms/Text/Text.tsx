@@ -33,6 +33,7 @@ type TextOwnProps<C extends ElementType> = {
   lowercase?: boolean
   semibold?: boolean
   style?: CSSProperties
+  superbold?: boolean
   tooltip?: string
   uppercase?: boolean
 }
@@ -54,6 +55,7 @@ export const Text = <C extends ElementType = "p">(props: TextProps<C>) => {
     lowercase,
     semibold,
     style,
+    superbold,
     tooltip,
     uppercase,
     ...rest
@@ -62,7 +64,8 @@ export const Text = <C extends ElementType = "p">(props: TextProps<C>) => {
   const { tooltipElement, tooltipHandlers } = useTooltip(tooltip)
 
   let resolvedFontWeight: TextFontWeight = fontWeight
-  if (bold) resolvedFontWeight = "bold"
+  if (superbold) resolvedFontWeight = "superbold"
+  else if (bold) resolvedFontWeight = "bold"
   else if (semibold) resolvedFontWeight = "semibold"
 
   let textTransform: TextTransform | undefined
