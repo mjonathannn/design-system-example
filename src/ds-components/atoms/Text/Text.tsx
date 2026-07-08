@@ -3,7 +3,7 @@ import type { ComponentPropsWithoutRef, CSSProperties, ElementType, ReactNode } 
 import { colors } from "@/foundation"
 
 import { useTooltip } from "../Tooltip"
-import type { TextAlign, TextFontSize, TextFontWeight } from "./Text.styles"
+import type { TextAlign, TextFontSize, TextFontWeight, TextTransform } from "./Text.styles"
 import { StyledText } from "./Text.styles"
 
 type TextColor = "brand" | "danger" | "default" | "info" | "inverse" | "muted" | "secondary" | "success" | "warning"
@@ -25,13 +25,16 @@ type TextOwnProps<C extends ElementType> = {
   align?: TextAlign
   as?: C
   bold?: boolean
+  capitalize?: boolean
   className?: string
   color?: TextColor
   fontSize?: TextFontSize
   fontWeight?: TextFontWeight
+  lowercase?: boolean
   semibold?: boolean
   style?: CSSProperties
   tooltip?: string
+  uppercase?: boolean
 }
 
 export type TextProps<C extends ElementType = "p"> = TextOwnProps<C> &
@@ -42,14 +45,17 @@ export const Text = <C extends ElementType = "p">(props: TextProps<C>) => {
     align,
     as,
     bold,
+    capitalize,
     children,
     className,
     color = "default",
     fontSize = "md",
     fontWeight = "regular",
+    lowercase,
     semibold,
     style,
     tooltip,
+    uppercase,
     ...rest
   } = props
 
@@ -59,6 +65,11 @@ export const Text = <C extends ElementType = "p">(props: TextProps<C>) => {
   if (bold) resolvedFontWeight = "bold"
   else if (semibold) resolvedFontWeight = "semibold"
 
+  let textTransform: TextTransform | undefined
+  if (uppercase) textTransform = "uppercase"
+  else if (lowercase) textTransform = "lowercase"
+  else if (capitalize) textTransform = "capitalize"
+
   return (
     <>
       <StyledText
@@ -66,6 +77,7 @@ export const Text = <C extends ElementType = "p">(props: TextProps<C>) => {
         $color={colorMap[color]}
         $fontSize={fontSize}
         $fontWeight={resolvedFontWeight}
+        $textTransform={textTransform}
         as={as}
         className={className}
         style={style}

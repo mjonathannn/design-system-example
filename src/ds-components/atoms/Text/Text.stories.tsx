@@ -15,6 +15,10 @@ const meta: Meta<typeof Text> = {
       control: "boolean",
       description: 'Shorthand for fontWeight="bold". Takes precedence over semibold and fontWeight.',
     },
+    capitalize: {
+      control: "boolean",
+      description: "Applies text-transform: capitalize. Overridden by uppercase and lowercase.",
+    },
     color: {
       control: "select",
       options: ["default", "secondary", "muted", "inverse", "brand", "success", "warning", "danger", "info"],
@@ -28,9 +32,17 @@ const meta: Meta<typeof Text> = {
       description: "Explicit font weight. Ignored when bold or semibold is set.",
       options: ["regular", "medium", "semibold", "bold"],
     },
+    lowercase: {
+      control: "boolean",
+      description: "Applies text-transform: lowercase. Takes precedence over capitalize; overridden by uppercase.",
+    },
     semibold: {
       control: "boolean",
       description: 'Shorthand for fontWeight="semibold". Takes precedence over fontWeight; overridden by bold.',
+    },
+    uppercase: {
+      control: "boolean",
+      description: "Applies text-transform: uppercase. Takes precedence over lowercase and capitalize.",
     },
   },
   component: Text,
@@ -68,6 +80,17 @@ export const Semibold: Story = {
     children: "Texto semibold via a prop semibold",
     semibold: true,
   },
+}
+
+// The uppercase, lowercase, and capitalize convenience props, each a shorthand for text-transform
+export const TextTransforms: Story = {
+  render: () => (
+    <>
+      <Text uppercase>Texto em uppercase</Text>
+      <Text lowercase>TEXTO EM LOWERCASE</Text>
+      <Text capitalize>texto em capitalize</Text>
+    </>
+  ),
 }
 
 // The style escape hatch applying one-off inline CSS on top of the variant props

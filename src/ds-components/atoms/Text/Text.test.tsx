@@ -81,6 +81,44 @@ describe("Text", () => {
     expect(screen.getByText("Weighted")).toHaveStyle({ fontWeight: typography.fontWeight.semibold })
   })
 
+  it("applies text-transform: uppercase when the uppercase prop is set", () => {
+    render(<Text uppercase>Uppercase</Text>)
+
+    expect(screen.getByText("Uppercase")).toHaveStyle({ textTransform: "uppercase" })
+  })
+
+  it("applies text-transform: lowercase when the lowercase prop is set", () => {
+    render(<Text lowercase>Lowercase</Text>)
+
+    expect(screen.getByText("Lowercase")).toHaveStyle({ textTransform: "lowercase" })
+  })
+
+  it("applies text-transform: capitalize when the capitalize prop is set", () => {
+    render(<Text capitalize>Capitalize</Text>)
+
+    expect(screen.getByText("Capitalize")).toHaveStyle({ textTransform: "capitalize" })
+  })
+
+  it("uppercase takes precedence over lowercase and capitalize when multiple are set", () => {
+    render(
+      <Text capitalize lowercase uppercase>
+        All three
+      </Text>,
+    )
+
+    expect(screen.getByText("All three")).toHaveStyle({ textTransform: "uppercase" })
+  })
+
+  it("lowercase takes precedence over capitalize when both are set", () => {
+    render(
+      <Text capitalize lowercase>
+        Both
+      </Text>,
+    )
+
+    expect(screen.getByText("Both")).toHaveStyle({ textTransform: "lowercase" })
+  })
+
   it("applies a display size above 4xl", () => {
     render(<Text fontSize="7xl">Display</Text>)
 
