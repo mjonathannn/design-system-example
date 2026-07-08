@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from "react"
 
-import { colors, shadows, translucency } from "@/foundation"
+import { colors, radius, shadows, translucency } from "@/foundation"
 
 import { useTooltip } from "../Tooltip"
 import { StyledCard } from "./Card.styles"
@@ -8,6 +8,7 @@ import { StyledCard } from "./Card.styles"
 type TranslucentLevel = "low" | "medium" | "high"
 
 export type CardProps = {
+  borderRadius?: keyof typeof radius
   children?: ReactNode
   className?: string
   elevated?: boolean
@@ -22,7 +23,7 @@ const resolveTranslucentLevel = (value: TranslucentLevel | true): TranslucentLev
   value === true ? "medium" : value
 
 export const Card = (props: CardProps) => {
-  const { children, className, elevated = true, style, tooltip, translucent } = props
+  const { borderRadius = "xl", children, className, elevated = true, style, tooltip, translucent } = props
 
   const { tooltipElement, tooltipHandlers } = useTooltip(tooltip)
 
@@ -41,6 +42,7 @@ export const Card = (props: CardProps) => {
         $backdropFilter={backdropFilter}
         $background={background}
         $border={border}
+        $borderRadius={radius[borderRadius]}
         $boxShadow={boxShadow}
         className={className}
         style={style}

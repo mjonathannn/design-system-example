@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
-import { colors, spacing } from "@/foundation"
+import { colors, radius, spacing } from "@/foundation"
 
 import { Card } from "./Card"
 
@@ -12,6 +12,18 @@ describe("Card", () => {
     const element = screen.getByText("Content")
 
     expect(element.tagName).toBe("DIV")
+  })
+
+  it("defaults to the xl border radius", () => {
+    render(<Card>Content</Card>)
+
+    expect(screen.getByText("Content")).toHaveStyle({ borderRadius: radius.xl })
+  })
+
+  it("applies the borderRadius prop", () => {
+    render(<Card borderRadius="full">Content</Card>)
+
+    expect(screen.getByText("Content")).toHaveStyle({ borderRadius: radius.full })
   })
 
   it("applies the className passed as a prop", () => {

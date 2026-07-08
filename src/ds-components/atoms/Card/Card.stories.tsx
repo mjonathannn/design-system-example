@@ -1,12 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import { spacing } from "@/foundation"
+import { radius, spacing } from "@/foundation"
 
 import { Card } from "./Card"
+
+const radiusKeys = Object.keys(radius) as (keyof typeof radius)[]
 
 const meta: Meta<typeof Card> = {
   args: { children: "O conteúdo do card fica aqui." },
   argTypes: {
+    borderRadius: {
+      control: "select",
+      description: "Border radius token applied to the card, from the radius token scale. Defaults to xl.",
+      options: radiusKeys,
+    },
     elevated: { control: "boolean", description: "Adds a drop shadow and removes the border. Defaults to true." },
     translucent: { control: "select", options: [false, true, "low", "medium", "high"] },
   },
@@ -21,6 +28,11 @@ type Story = StoryObj<typeof Card>
 
 // Default rendering with no variant props set
 export const Default: Story = {}
+
+// The borderRadius prop set to full, rendering a pill-shaped card
+export const FullyRounded: Story = {
+  args: { borderRadius: "full", style: { width: 240 } },
+}
 
 // The elevated prop set to false, removing the default drop shadow and restoring the border
 export const Flat: Story = { args: { elevated: false } }
