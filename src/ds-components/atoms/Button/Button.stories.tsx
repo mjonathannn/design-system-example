@@ -25,7 +25,7 @@ const meta: Meta<typeof Button> = {
     },
     borderRadius: {
       control: "select",
-      description: "Border radius level applied to the button: low, medium, high or full. Defaults to low.",
+      description: "Border radius level applied to the button: subtle, low, medium, high or full. Defaults to low.",
       options: borderRadiusLevelKeys,
     },
     color: {

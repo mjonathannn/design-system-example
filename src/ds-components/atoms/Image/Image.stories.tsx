@@ -24,7 +24,7 @@ const meta: Meta<typeof Image> = {
   argTypes: {
     borderRadius: {
       control: "select",
-      description: "Border radius level applied to the image: low, medium, high or full. Defaults to medium.",
+      description: "Border radius level applied to the image: subtle, low, medium, high or full. Defaults to medium.",
       options: borderRadiusLevelKeys,
     },
     boxShadow: {

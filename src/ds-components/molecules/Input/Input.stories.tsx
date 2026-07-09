@@ -18,7 +18,7 @@ const meta: Meta<typeof Input> = {
   argTypes: {
     borderRadius: {
       control: "select",
-      description: "Border radius level applied to the input: low, medium, high or full. Defaults to medium.",
+      description: "Border radius level applied to the input: subtle, low, medium, high or full. Defaults to medium.",
       options: borderRadiusLevelKeys,
     },
     disabled: { control: "boolean", description: "Native disabled attribute, forwarded to the input element" },
