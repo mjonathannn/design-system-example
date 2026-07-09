@@ -45,14 +45,21 @@ type Story = StoryObj<typeof Card>
 // Default rendering with no variant props set
 export const Default: Story = {}
 
-// The borderRadius prop set to high, the roundest of the fixed-radius levels
-export const HighBorderRadius: Story = {
-  args: { borderRadius: "high", style: { width: 240 } },
-}
-
-// The borderRadius prop set to full, rendering a pill-shaped card
-export const FullyRounded: Story = {
-  args: { borderRadius: "full", style: { width: 240 } },
+// Every border radius level available for the borderRadius prop
+export const BorderRadiuses: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: spacing[8] }}>
+      {borderRadiusLevelKeys.map((borderRadiusLevelKey) => (
+        <div
+          key={borderRadiusLevelKey}
+          style={{ alignItems: "center", display: "flex", flexDirection: "column", gap: spacing[8] }}
+        >
+          <Card borderRadius={borderRadiusLevelKey} style={{ height: 80, width: 160 }} />
+          <span>{borderRadiusLevelKey}</span>
+        </div>
+      ))}
+    </div>
+  ),
 }
 
 // Every semantic color token available for the color prop, applied to the card's background
@@ -108,9 +115,9 @@ export const TranslucentHigh: Story = {
   ],
 }
 
-// elevated and translucent combined together on the same Card
-export const ElevatedAndTranslucent: Story = {
-  args: { elevated: true, translucent: "medium" },
+// elevated set to false alongside translucent, leaving only the glass edge glow with no drop shadow
+export const TranslucentWithoutElevation: Story = {
+  args: { elevated: false, translucent: "medium" },
   decorators: [
     (Story) => (
       <div style={{ background: "linear-gradient(135deg, #3D5778 0%, #4B87D6 100%)", padding: spacing[32] }}>
