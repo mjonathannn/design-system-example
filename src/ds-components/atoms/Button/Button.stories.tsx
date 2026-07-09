@@ -1,11 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Link, MemoryRouter } from "react-router-dom"
 
-import { semanticColors, type SemanticColorsType, spacing } from "../../../foundation"
+import {
+  borderRadiusLevels,
+  type BorderRadiusLevelsType,
+  semanticColors,
+  type SemanticColorsType,
+  spacing,
+} from "../../../foundation"
 import { Icon } from "../Icon"
 import { Button } from "./Button"
 
 const colorKeys = Object.keys(semanticColors) as (keyof SemanticColorsType)[]
+const borderRadiusLevelKeys = Object.keys(borderRadiusLevels) as (keyof BorderRadiusLevelsType)[]
 
 const meta: Meta<typeof Button> = {
   args: {
@@ -15,6 +22,11 @@ const meta: Meta<typeof Button> = {
     as: {
       control: false,
       description: "Element or component the button renders as, e.g. a router Link. Defaults to a native button.",
+    },
+    borderRadius: {
+      control: "select",
+      description: "Border radius level applied to the button: low, medium, high or full. Defaults to low.",
+      options: borderRadiusLevelKeys,
     },
     color: {
       control: "select",
@@ -168,6 +180,19 @@ export const Sizes: Story = {
       <Button size="small">Small</Button>
       <Button size="medium">Medium</Button>
       <Button size="large">Large</Button>
+    </div>
+  ),
+}
+
+// Every border radius level available for the borderRadius prop
+export const BorderRadiuses: Story = {
+  render: () => (
+    <div style={{ alignItems: "center", display: "flex", gap: spacing[8] }}>
+      {borderRadiusLevelKeys.map((borderRadiusLevelKey) => (
+        <Button key={borderRadiusLevelKey} borderRadius={borderRadiusLevelKey}>
+          {borderRadiusLevelKey}
+        </Button>
+      ))}
     </div>
   ),
 }

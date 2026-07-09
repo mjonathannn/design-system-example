@@ -1,12 +1,13 @@
 import styled, { css } from "styled-components"
 
-import { colors, motion, opacity, radius, spacing, typography } from "@/foundation"
+import { colors, motion, opacity, spacing, typography } from "@/foundation"
 import { hexToRgba } from "@/utils/colors"
 
 export type ButtonSize = "large" | "medium" | "small"
 export type ButtonVariant = "filled" | "link" | "outlined"
 
 export type StyledButtonProps = {
+  $borderRadius: string
   $color: string
   $size: ButtonSize
   $variant: ButtonVariant
@@ -62,11 +63,11 @@ const variantStyles = (color: string): Record<ButtonVariant, ReturnType<typeof c
 
 export const StyledButton = styled.button<StyledButtonProps>`
   ${(props) => {
-    const { $color, $size, $variant } = props
+    const { $borderRadius, $color, $size, $variant } = props
 
     return css`
       align-items: center;
-      border-radius: ${radius.md};
+      border-radius: ${$borderRadius};
       cursor: pointer;
       display: inline-flex;
       font-family: ${typography.fontFamily.sans};

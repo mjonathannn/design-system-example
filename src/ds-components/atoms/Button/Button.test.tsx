@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { Link, MemoryRouter } from "react-router-dom"
 import { describe, expect, it, vi } from "vitest"
 
-import { colors, semanticColors, typography } from "@/foundation"
+import { borderRadiusLevels, colors, semanticColors, typography } from "@/foundation"
 
 import { Button } from "./Button"
 
@@ -37,6 +37,18 @@ describe("Button", () => {
     render(<Button>Click me</Button>)
 
     expect(screen.getByRole("button")).toHaveStyle({ backgroundColor: semanticColors.brand })
+  })
+
+  it("defaults to the low border radius", () => {
+    render(<Button>Click me</Button>)
+
+    expect(screen.getByRole("button")).toHaveStyle({ borderRadius: borderRadiusLevels.low })
+  })
+
+  it("applies the borderRadius prop", () => {
+    render(<Button borderRadius="high">Click me</Button>)
+
+    expect(screen.getByRole("button")).toHaveStyle({ borderRadius: borderRadiusLevels.high })
   })
 
   it("applies the color prop to the filled variant", () => {
